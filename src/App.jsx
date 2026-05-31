@@ -59,7 +59,7 @@ export default function App() {
       </header>
 
       {/* Primary Tab View Panel */}
-      <main style={{ flex: 1, position: 'relative', height: '100%' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
         {renderTabContent()}
       </main>
 
