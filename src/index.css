@@ -1,0 +1,367 @@
+/* IronFlow: Global iOS-Styled Dark Mode Design System */
+
+:root {
+  /* Color Palette - Shark-Grey & Sports Red with Gold Accents */
+  --shark-950: #1a1c1e;       /* Deepest background (Dark Slate Gray) */
+  --shark-900: #25292c;       /* Main content background (Sleek Shark Skin) */
+  --shark-800: #32383d;       /* Card / Sheet background (Lighter Metallic Slate) */
+  --shark-700: #424950;       /* Sub-elements / Input field fill */
+  --shark-600: #555e67;       /* Borders and inactive elements */
+  --shark-500: #6f7b87;       /* Secondary text */
+  --shark-300: #d1d8e0;       /* Highlights / Values text */
+  --shark-100: #ffffff;       /* Main heading text */
+  
+  --gym-red: #ff3b30;         /* Primary Red action color */
+  --gym-red-hover: #ff4d43;
+  --gym-red-active: #d62218;
+  
+  --gym-gold: #ffcc00;        /* Gold Highlight / PR Badge */
+  --gym-gold-dim: rgba(255, 204, 0, 0.12);
+  
+  --ios-green: #34c759;       /* Logging completion state */
+  --ios-green-dim: rgba(52, 199, 89, 0.15);
+  
+  --glass-bg: rgba(37, 41, 44, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.25);
+
+  /* Typography & Layout Cues */
+  --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  
+  /* Safe Areas for iPhone Notch & Home Indicator */
+  --safe-top: env(safe-area-inset-top, 20px);
+  --safe-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+/* Light Mode Theme Adjustments (Defaults to Dark Mode for Gym Aesthetic) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --shark-950: #f4f5f6;
+    --shark-900: #ffffff;
+    --shark-800: #f9f9fb;
+    --shark-700: #ededf1;
+    --shark-600: #d1d1d6;
+    --shark-500: #8e8e93;
+    --shark-300: #48484a;
+    --shark-100: #1c1c1e;
+    
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.06);
+    --glass-shadow: rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Core Resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent; /* Remove blue highlight on iOS */
+  user-select: none; /* Make PWA feel native */
+}
+
+/* Enable text selection only on input fields */
+input, textarea {
+  user-select: text;
+}
+
+body {
+  font-family: var(--font-stack);
+  background-color: var(--shark-950);
+  color: var(--shark-100);
+  overflow: hidden; /* Screen shifting handled within views */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100svh;
+  max-width: 480px; /* Max widths for mobile-first PWA design */
+  margin: 0 auto;
+  background-color: var(--shark-900);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  border-left: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border);
+}
+
+/* iOS Spring & Smooth Scroll Physics */
+.scrollable {
+  flex: 1;
+  overflow-y: auto;
+  padding: calc(var(--safe-top) + 15px) 16px calc(var(--safe-bottom) + 80px) 16px;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar - thin & native feeling */
+.scrollable::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--shark-600);
+  border-radius: 4px;
+}
+
+/* Typography Styles */
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin-bottom: 12px;
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--shark-300);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--shark-300);
+}
+
+/* Cards (iOS rounded groups) */
+.ios-card {
+  background-color: var(--shark-800);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--glass-border);
+  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.ios-card:active {
+  transform: scale(0.985);
+  opacity: 0.95;
+}
+
+/* Standard Button */
+.ios-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-stack);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.ios-btn-primary {
+  background-color: var(--gym-red);
+  color: #ffffff;
+}
+
+.ios-btn-primary:hover {
+  background-color: var(--gym-red-hover);
+}
+
+.ios-btn-primary:active {
+  background-color: var(--gym-red-active);
+  transform: scale(0.97);
+}
+
+.ios-btn-secondary {
+  background-color: var(--shark-700);
+  color: var(--shark-100);
+  border: 1px solid var(--glass-border);
+}
+
+.ios-btn-secondary:active {
+  background-color: var(--shark-600);
+  transform: scale(0.97);
+}
+
+/* iOS Frosted Glass Panel Headers/Footers */
+.ios-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--safe-top) + 44px);
+  padding-top: var(--safe-top);
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 16px;
+  padding-right: 16px;
+  z-index: 10;
+}
+
+/* Navigation Tab Bar */
+.ios-tab-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--safe-bottom) + 56px);
+  padding-bottom: var(--safe-bottom);
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+}
+
+.ios-tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 50px;
+  color: var(--shark-500);
+  font-size: 10px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.ios-tab-item.active {
+  color: var(--gym-red);
+}
+
+.ios-tab-item .tab-icon {
+  margin-bottom: 4px;
+}
+
+/* Badge Layouts */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.badge-gold {
+  background-color: var(--gym-gold-dim);
+  color: var(--gym-gold);
+  border: 1px solid rgba(255, 204, 0, 0.3);
+}
+
+.badge-red {
+  background-color: rgba(255, 59, 48, 0.15);
+  color: var(--gym-red);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+.badge-green {
+  background-color: var(--ios-green-dim);
+  color: var(--ios-green);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+}
+
+/* iOS slide-up sheet modal backdrop */
+.ios-sheet-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.ios-sheet-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* iOS slide-up sheet modal panel */
+.ios-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--shark-800);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border: 1px solid var(--glass-border);
+  padding: 8px 16px calc(var(--safe-bottom) + 20px) 16px;
+  z-index: 101;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.15, 0.85, 0.35, 1);
+  max-height: 85%;
+  overflow-y: auto;
+}
+
+.ios-sheet.active {
+  transform: translateY(0);
+}
+
+.ios-sheet-handle {
+  width: 36px;
+  height: 5px;
+  background-color: var(--shark-600);
+  border-radius: 3px;
+  margin: 0 auto 16px auto;
+}
+
+/* Inputs and forms styling */
+.ios-input-group {
+  margin-bottom: 16px;
+}
+
+.ios-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--shark-300);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ios-input {
+  width: 100%;
+  background-color: var(--shark-700);
+  border: 1px solid var(--glass-border);
+  color: var(--shark-100);
+  font-family: var(--font-stack);
+  font-size: 16px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.ios-input:focus {
+  border-color: var(--gym-red);
+}

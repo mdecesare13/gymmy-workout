@@ -1,0 +1,2325 @@
+[
+  {
+    "id": "flat_barbell_bench_press",
+    "name": "Flat Barbell Bench Press",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Lying flat on a bench, lower a barbell to your chest and press it back up.",
+    "instructions": [
+      "Lie flat on the bench, feet flat on the floor, eyes directly under the bar.",
+      "Grip the bar slightly wider than shoulder-width, wrists straight.",
+      "Unrack the bar and lower it under control to your mid-chest.",
+      "Push the bar up powerfully, keeping your elbows slightly tucked (45 degrees)."
+    ]
+  },
+  {
+    "id": "incline_barbell_bench_press",
+    "name": "Incline Barbell Bench Press",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 8,
+    "description": "Lying on a 30-45 degree incline bench, lower a barbell to your upper chest and press it up.",
+    "instructions": [
+      "Lie on an incline bench, feet flat on the floor, core tight.",
+      "Unrack the bar and lower it smoothly to your upper chest.",
+      "Drive the bar straight up until arms are extended, keeping shoulders pinned back."
+    ]
+  },
+  {
+    "id": "decline_barbell_bench_press",
+    "name": "Decline Barbell Bench Press",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Lying on a decline bench, lower a barbell to your lower chest/upper abs and press it up.",
+    "instructions": [
+      "Secure feet under pads and lie on a decline bench.",
+      "Bring the bar down slowly to your lower sternum.",
+      "Press the bar up along a vertical path to lock out."
+    ]
+  },
+  {
+    "id": "flat_dumbbell_bench_press",
+    "name": "Flat Dumbbell Bench Press",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Lying flat on a bench, press dumbbells upwards, rotating them slightly for contraction.",
+    "instructions": [
+      "Sit on a bench with dumbbells on your knees, then roll back under control.",
+      "Keep dumbbells at chest height, elbows at 45 degrees.",
+      "Press dumbbells straight up, converging slightly at the top without touching."
+    ]
+  },
+  {
+    "id": "incline_dumbbell_bench_press",
+    "name": "Incline Dumbbell Bench Press",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Lying on an incline bench, press dumbbells upwards to target the upper chest fibers.",
+    "instructions": [
+      "Set incline to 30 degrees, sit and bring dumbbells to chest level.",
+      "Press dumbbells up over your face, keeping wrists stacked over elbows.",
+      "Lower under control until you feel a deep stretch in your upper chest."
+    ]
+  },
+  {
+    "id": "decline_dumbbell_bench_press",
+    "name": "Decline Dumbbell Bench Press",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Lying decline, press dumbbells upwards to target the lower chest.",
+    "instructions": [
+      "Lie back on a decline bench, holding dumbbells at chest height.",
+      "Press the weights up and slightly together.",
+      "Return slowly to the starting position."
+    ]
+  },
+  {
+    "id": "dumbbell_flys",
+    "name": "Flat Dumbbell Flys",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Lying flat, open your arms wide in an arc with a slight elbow bend, stretching the chest.",
+    "instructions": [
+      "Lie on a flat bench holding dumbbells straight up with palms facing each other.",
+      "Lower the weights out to your sides in a wide arc, maintaining a soft bend in your elbows.",
+      "Squeeze your chest muscles to return the weights to the top along the same path."
+    ]
+  },
+  {
+    "id": "incline_dumbbell_flys",
+    "name": "Incline Dumbbell Flys",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Lying incline, perform an arm-opening stretch to isolate the upper pectorals.",
+    "instructions": [
+      "Sit on an incline bench, hold dumbbells over your chest, palms facing each other.",
+      "Lower dumbbells wide to the sides, feeling a stretch in your upper chest.",
+      "Hug an imaginary tree to return the dumbbells to the top."
+    ]
+  },
+  {
+    "id": "cable_crossover",
+    "name": "Cable Crossover",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Using high cables, bring your hands forward and down in front of your waist.",
+    "instructions": [
+      "Set pulleys high, step forward, lean slightly forward, chest upright.",
+      "With elbows slightly bent, sweep hands down and together in front of your hips.",
+      "Squeeze your chest at the bottom before returning slow and wide."
+    ]
+  },
+  {
+    "id": "low_to_high_cable_flys",
+    "name": "Low-to-High Cable Flys",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Using low cables, fly hands upwards and together to focus on upper clavicular chest fibers.",
+    "instructions": [
+      "Set pulleys at the lowest point, step forward, palms facing forward.",
+      "Fly hands upward and inward to meet in front of your upper chest.",
+      "Return down slowly along the same upward arc."
+    ]
+  },
+  {
+    "id": "high_to_low_cable_flys",
+    "name": "High-to-Low Cable Flys",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Using high cables, bring your hands down and together to isolate lower chest fibers.",
+    "instructions": [
+      "Set pulleys at the highest point, hold handles, step out.",
+      "Push cables down and together in front of your midsection.",
+      "Return wide, maintaining elbow angle."
+    ]
+  },
+  {
+    "id": "chest_press_machine",
+    "name": "Chest Press Machine",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Seated machine press to safely overload chest muscles without balance overhead.",
+    "instructions": [
+      "Adjust the seat height so the handles align with your mid-chest.",
+      "Keep your back and shoulders pinned firmly against the back pad.",
+      "Push the handles straight out, exhaling as you extend your arms."
+    ]
+  },
+  {
+    "id": "incline_chest_press_machine",
+    "name": "Incline Chest Press Machine",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Seated incline machine press targeting upper pectorals.",
+    "instructions": [
+      "Adjust seat so grips align with upper chest.",
+      "Press the weights upward and away along the machine guide path.",
+      "Slowly return to start, keeping tension on your muscles."
+    ]
+  },
+  {
+    "id": "pec_deck_fly_machine",
+    "name": "Pec Deck Fly Machine",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Seated fly machine keeping arms supported while isolating chest contraction.",
+    "instructions": [
+      "Sit back against pad, place forearms/hands on handles, elbows at 90 degrees.",
+      "Squeeze pads together in front of you, contracting your chest.",
+      "Slowly release back until arms are in line with shoulders."
+    ]
+  },
+  {
+    "id": "pushups",
+    "name": "Standard Pushups",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Classic bodyweight exercise for chest, shoulders, and triceps.",
+    "instructions": [
+      "Place hands shoulder-width apart in a high plank position.",
+      "Lower your body in a straight line until your chest nearly touches the floor.",
+      "Push through the floor to return to the starting plank."
+    ]
+  },
+  {
+    "id": "incline_pushups",
+    "name": "Incline Pushups",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Pushups with hands on an elevated platform, reducing weight and targeting lower chest.",
+    "instructions": [
+      "Place hands on a bench or elevated platform, feet on the floor.",
+      "Lower chest to the platform, keeping body straight.",
+      "Press back up to full extension."
+    ]
+  },
+  {
+    "id": "decline_pushups",
+    "name": "Decline Pushups",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Pushups with feet elevated on a bench, shifting tension to the upper chest.",
+    "instructions": [
+      "Place feet on a bench or platform, hands on the floor.",
+      "Lower your chest down, maintaining core tension.",
+      "Press up, keeping elbows tucked."
+    ]
+  },
+  {
+    "id": "chest_dips",
+    "name": "Chest Dips",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Leaning forward on parallel bars, lower your body to target the lower chest and triceps.",
+    "instructions": [
+      "Support yourself on parallel bars. Tilt your torso forward (30 degrees).",
+      "Bend elbows to lower your body until shoulders are below elbows.",
+      "Press back up, focusing on squeezing the chest."
+    ]
+  },
+  {
+    "id": "dumbbell_pullover",
+    "name": "Dumbbell Pullover",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Lying across a bench, lower a dumbbell behind your head to expand chest cavity.",
+    "instructions": [
+      "Lie across a bench, shoulders supported, hips slightly down.",
+      "Hold a dumbbell over your chest with both hands in a diamond grip.",
+      "Lower the weight back behind your head, keeping elbows slightly bent.",
+      "Pull the weight back up to vertical, squeezing your chest."
+    ]
+  },
+  {
+    "id": "landmine_press",
+    "name": "Landmine Press",
+    "region": "chest",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Pressing a barbell loaded into a landmine base, targeting upper chest.",
+    "instructions": [
+      "Stand holding the end of a landmine barbell in one hand near your shoulder.",
+      "Press the barbell forward and upward to lockout.",
+      "Squeeze your upper chest at the top and return under control."
+    ]
+  },
+
+  {
+    "id": "barbell_deadlift",
+    "name": "Barbell Deadlift",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 4,
+    "defaultReps": 5,
+    "description": "Full-body compound pull loading spinal erectors, lats, glutes, and hamstrings.",
+    "instructions": [
+      "Stand with mid-foot under the bar. Bend and grip the bar overhand.",
+      "Drop hips slightly, flatten your back, and pull shoulder blades back.",
+      "Push through the floor, standing up straight with the bar.",
+      "Lock out hips at the top without hyperextending your spine."
+    ]
+  },
+  {
+    "id": "conventional_deadlift",
+    "name": "Conventional Deadlift",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 4,
+    "defaultReps": 5,
+    "description": "Standard deadlift stance prioritizing lower back, hamstrings, and erectors.",
+    "instructions": [
+      "Feet hip-width apart, shins 1 inch from the bar.",
+      "Hinge at hips, keep spine neutral, grip bar shoulder-width.",
+      "Pull slack out of the bar, drive legs down to stand upright."
+    ]
+  },
+  {
+    "id": "sumo_deadlift",
+    "name": "Sumo Deadlift",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 4,
+    "defaultReps": 5,
+    "description": "Wide stance deadlift shifting loading towards hips and legs while engaging mid-back.",
+    "instructions": [
+      "Set feet very wide, toes angled out. Grip bar inside knees.",
+      "Keep torso more upright. Drive knees out, push floor away.",
+      "Stand tall, locking out knees and hips simultaneously."
+    ]
+  },
+  {
+    "id": "barbell_bent_over_row",
+    "name": "Barbell Bent-Over Row",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 4,
+    "defaultReps": 8,
+    "description": "Hinged barbell row for overall back thickness.",
+    "instructions": [
+      "Hold bar overhand. Hinge at hips (45 degrees), flat back.",
+      "Pull bar to your lower ribs, keeping elbows tucked close.",
+      "Lower bar slowly, feeling a stretch in your upper lats."
+    ]
+  },
+  {
+    "id": "one_arm_dumbbell_row",
+    "name": "One-Arm Dumbbell Row",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Unilateral row supporting body on a bench to isolate lats and mid-back.",
+    "instructions": [
+      "Place same-side knee and hand on a flat bench. Flat back.",
+      "Drape other arm straight down with a dumbbell.",
+      "Pull elbow up to your hip, squeezing lat. Lower under control."
+    ]
+  },
+  {
+    "id": "t_bar_row",
+    "name": "T-Bar Row",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Barbell or machine row using a V-bar handle to overload mid-back thickness.",
+    "instructions": [
+      "Straddle the bar, hinge at hips, grip the V-handle.",
+      "Pull handle towards your chest, keeping elbows tucked.",
+      "Lower under control, keeping spine straight."
+    ]
+  },
+  {
+    "id": "wide_grip_lat_pulldown",
+    "name": "Wide-Grip Lat Pulldown",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Overhead cable pull to build lat width (V-taper).",
+    "instructions": [
+      "Grip the pulldown bar wide, palms facing forward.",
+      "Sit, secure thighs. Pull bar to upper chest, chest up.",
+      "Lead with elbows, squeezing lats. Return slowly."
+    ]
+  },
+  {
+    "id": "close_grip_lat_pulldown",
+    "name": "Close-Grip Lat Pulldown",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Overhead pull using V-handle to target lower lat fibers.",
+    "instructions": [
+      "Attach a V-bar, sit, and grip handles.",
+      "Lean back slightly, pull handles straight down to mid-chest.",
+      "Contract lats at the bottom, then extend fully up."
+    ]
+  },
+  {
+    "id": "seated_cable_row",
+    "name": "Seated Cable Row",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Horizontal cable pull targeting mid-back, rhomboids, and lats.",
+    "instructions": [
+      "Sit at a cable station, feet on pads, knees slightly bent.",
+      "Hold handle, sit upright with a flat back.",
+      "Pull hands to your belly button, squeezing shoulder blades together."
+    ]
+  },
+  {
+    "id": "chest_supported_dumbbell_row",
+    "name": "Chest-Supported Dumbbell Row",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Incline bench dumbbell row removing lower back stabilization requirements.",
+    "instructions": [
+      "Lie face down on a 30-degree incline bench.",
+      "Hold dumbbells hanging down, pull elbows up high.",
+      "Squeeze shoulder blades together, lower with control."
+    ]
+  },
+  {
+    "id": "pullups",
+    "name": "Wide Grip Pullups",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 8,
+    "description": "High-effort bodyweight overhead pull for maximum lat width.",
+    "instructions": [
+      "Hang from a bar with a wide overhand grip.",
+      "Pull your collarbone up to the bar, leading with elbows.",
+      "Lower under control to a dead hang position."
+    ]
+  },
+  {
+    "id": "chinups",
+    "name": "Chinups",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 8,
+    "description": "Underhand grip pullups loading lower lats and biceps.",
+    "instructions": [
+      "Hang from a bar with an underhand shoulder-width grip.",
+      "Pull yourself up until your chin clears the bar.",
+      "Control the descent back to arms fully straight."
+    ]
+  },
+  {
+    "id": "inverted_row",
+    "name": "Inverted Row",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Bodyweight row beneath a barbell or TRX handles.",
+    "instructions": [
+      "Position bar at waist height, lie under it face up.",
+      "Grip bar overhand, hang with body in straight plank, heels down.",
+      "Pull your chest up to the bar. Lower to full extension."
+    ]
+  },
+  {
+    "id": "assisted_pullup_machine",
+    "name": "Assisted Pullup Machine",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Machine-counterbalanced pullup to develop vertical pulling strength.",
+    "instructions": [
+      "Select weight support, stand/kneel on pad, grip wide.",
+      "Pull chest up towards the top handles.",
+      "Slowly lower down, resisting the upward push."
+    ]
+  },
+  {
+    "id": "back_extension",
+    "name": "Back Extension (45 Deg)",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Glute and lower back hinge targeting spinal erectors.",
+    "instructions": [
+      "Position yourself in a back extension station, hips over pad.",
+      "Lower torso down by hinging at the hips, keeping back flat.",
+      "Raise torso back up to align with legs, squeezing glutes."
+    ]
+  },
+  {
+    "id": "straight_arm_lat_pulldown",
+    "name": "Straight-Arm Lat Pulldown",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Cable pull with straight arms to isolate lat activation.",
+    "instructions": [
+      "Stand facing cable stack, grip bar overhand, arms straight.",
+      "Pull the bar down to your thighs, keeping arms extended.",
+      "Contract lats, return slow to upper eye level."
+    ]
+  },
+  {
+    "id": "single_arm_seated_cable_row",
+    "name": "Single-Arm Seated Cable Row",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Unilateral seated row for deeper rotational lat stretch.",
+    "instructions": [
+      "Sit, grab single handle, stretch forward allowing shoulder to extend.",
+      "Pull handle back to lower ribs, rotating torso slightly.",
+      "Control forward reach to isolate the single lat sweep."
+    ]
+  },
+  {
+    "id": "dumbbell_shrugs",
+    "name": "Dumbbell Shrugs",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Shrugging dumbbells to isolate upper traps.",
+    "instructions": [
+      "Stand holding dumbbells at your sides, arms straight.",
+      "Elevate your shoulders up towards ears as high as possible.",
+      "Squeeze, then lower slowly back to resting."
+    ]
+  },
+  {
+    "id": "barbell_shrugs",
+    "name": "Barbell Shrugs",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Shrugging a barbell to build upper traps.",
+    "instructions": [
+      "Hold barbell in front of thighs with an overhand grip.",
+      "Raise shoulders straight up, keeping arms extended.",
+      "Squeeze traps at peak, return slowly."
+    ]
+  },
+  {
+    "id": "hyperextensions",
+    "name": "Flat Bench Hyperextensions",
+    "region": "back",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Bodyweight spine erector exercise.",
+    "instructions": [
+      "Lie face down on a hyperextension bench, heels secured.",
+      "Hinge forward at the waist under control.",
+      "Raise torso until parallel with your lower body."
+    ]
+  },
+
+  {
+    "id": "standing_barbell_curl",
+    "name": "Standing Barbell Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Classic bicep builder utilizing a straight barbell.",
+    "instructions": [
+      "Stand with feet shoulder-width apart, holding a barbell with underhand grip.",
+      "Keep elbows pinned to your ribs, shoulders back.",
+      "Curl bar up to shoulder height. Lower slowly, squeezing triceps at the bottom."
+    ]
+  },
+  {
+    "id": "standing_dumbbell_curl",
+    "name": "Standing Dumbbell Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Alternating dumbbell curls with wrist supination (rotation).",
+    "instructions": [
+      "Hold dumbbells at sides, palms facing inwards.",
+      "As you curl up, rotate wrist so palm faces up.",
+      "Lower under control, returning palms to side orientation."
+    ]
+  },
+  {
+    "id": "incline_dumbbell_curl",
+    "name": "Incline Dumbbell Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Lying incline, stretching the long head of the bicep.",
+    "instructions": [
+      "Sit on an incline bench at 45 degrees, dumbbells hanging straight down.",
+      "Keep elbows back, curl weights up, supinating wrists.",
+      "Lower slowly, enjoying the deep bicep stretch."
+    ]
+  },
+  {
+    "id": "hammer_curl",
+    "name": "Dumbbell Hammer Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Neutral grip dumbbell curls focusing on brachialis and forearm size.",
+    "instructions": [
+      "Stand holding dumbbells with palms facing each other (neutral).",
+      "Curl weights up, maintaining the neutral hammer grip throughout.",
+      "Lower under control, keeping wrists locked."
+    ]
+  },
+  {
+    "id": "concentration_curl",
+    "name": "Concentration Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Seated isolated curl bracing elbow against inner thigh.",
+    "instructions": [
+      "Sit on a bench, lean forward, brace elbow against inner thigh.",
+      "Drape arm down, holding dumbbell.",
+      "Curl weight up to chin, keeping body locked. Lower under control."
+    ]
+  },
+  {
+    "id": "preacher_curl",
+    "name": "EZ-Bar Preacher Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Barbell curl bracing triceps against preacher bench to prevent cheating.",
+    "instructions": [
+      "Sit on preacher bench, rest back of arms flat on pad.",
+      "Hold EZ-bar with underhand grip. Curl bar upward.",
+      "Lower slowly until arms are fully extended."
+    ]
+  },
+  {
+    "id": "dumbbell_preacher_curl",
+    "name": "Dumbbell Preacher Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Unilateral bicep curl on preacher bench.",
+    "instructions": [
+      "Drape single arm over preacher pad, holding dumbbell.",
+      "Curl dumbbell up, maintaining arm contact with pad.",
+      "Lower slowly to full extension."
+    ]
+  },
+  {
+    "id": "cable_bicep_curl",
+    "name": "Cable Bicep Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Constant tension bicep curls using a cable straight bar.",
+    "instructions": [
+      "Stand facing cable stack, hold straight bar attached to low pulley.",
+      "Keep elbows tight to ribs, curl bar upward.",
+      "Resist the pull on the way down, extending arms."
+    ]
+  },
+  {
+    "id": "overhead_cable_curl",
+    "name": "Overhead Cable Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "High cable double arm bicep curls simulating a front double biceps pose.",
+    "instructions": [
+      "Stand center between cable towers, pulleys set high, holding single handles.",
+      "Extend arms out to sides parallel to floor.",
+      "Curl hands inward to ears, keeping upper arms parallel to floor."
+    ]
+  },
+  {
+    "id": "spider_curl",
+    "name": "Spider Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Lying face down on incline preacher pad, curls hanging straight down.",
+    "instructions": [
+      "Lie face down on vertical side of preacher bench or incline bench.",
+      "Let arms hang straight down, hold barbell or dumbbells.",
+      "Curl barbell up, keeping elbows tucked beneath shoulders."
+    ]
+  },
+  {
+    "id": "ez_bar_bicep_curl",
+    "name": "EZ-Bar Standing Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Bicep curls using a curved EZ-bar to reduce wrist strain.",
+    "instructions": [
+      "Hold EZ-bar on the angled grips, palms angled in.",
+      "Curl the bar up, keeping elbows locked in place.",
+      "Lower under control, keeping wrists firm."
+    ]
+  },
+  {
+    "id": "reverse_ez_bar_curl",
+    "name": "Reverse EZ-Bar Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Overhand grip bicep curls targeting brachioradialis forearm muscle.",
+    "instructions": [
+      "Grip EZ-bar with an overhand (pronated) grip.",
+      "Curl bar up, keeping elbows pinned.",
+      "Lower under control, maintaining grip tension."
+    ]
+  },
+  {
+    "id": "single_arm_cable_curl",
+    "name": "Single-Arm Cable Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Unilateral cable curl for isolated bicep contraction.",
+    "instructions": [
+      "Grab single handle from low pulley, stand facing away/towards stack.",
+      "Curl handle up, keeping elbow in fixed position.",
+      "Extend arm fully back down."
+    ]
+  },
+  {
+    "id": "machine_preacher_curl",
+    "name": "Machine Preacher Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Gym machine isolating biceps using preacher pads.",
+    "instructions": [
+      "Adjust seat, place elbows on pad, grab handles.",
+      "Pull handles up, contracting biceps.",
+      "Control resistance back down."
+    ]
+  },
+  {
+    "id": "zottman_curl",
+    "name": "Zottman Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Curls supinating on the way up and pronating (overhand) on the way down.",
+    "instructions": [
+      "Hold dumbbells, curl up with palms facing up.",
+      "At the top, rotate wrists so palms face down.",
+      "Lower weights with overhand grip. Rotate back at bottom."
+    ]
+  },
+  {
+    "id": "drag_curl",
+    "name": "Drag Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Bicep curl keeping the bar touching your body, pulling elbows backward.",
+    "instructions": [
+      "Hold barbell, stand tall. Curl bar up by dragging it up your torso.",
+      "Elbows will slide backwards behind your body.",
+      "Squeeze biceps, return bar down contact route."
+    ]
+  },
+  {
+    "id": "high_pulley_cable_curl",
+    "name": "High Pulley Cable Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Single-arm cable curl using high pulley.",
+    "instructions": [
+      "Stand next to high pulley, hold handle.",
+      "Curl hand down towards shoulder, elbow high.",
+      "Release slowly, resisting tension."
+    ]
+  },
+  {
+    "id": "cable_rope_hammer_curl",
+    "name": "Cable Rope Hammer Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Neutral rope grip curl on low cable pulley.",
+    "instructions": [
+      "Hold rope ends, palms facing each other.",
+      "Curl hands up towards shoulders.",
+      "Lower under control, keeping neutral grip."
+    ]
+  },
+  {
+    "id": "incline_hammer_curl",
+    "name": "Incline Hammer Curl",
+    "region": "bis",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Lying incline neutral dumbbell curl.",
+    "instructions": [
+      "Lie back on incline bench, weights neutral at sides.",
+      "Curl weights up while keeping palms facing inward.",
+      "Lower slow to stretch biceps."
+    ]
+  },
+
+  {
+    "id": "close_grip_bench_press",
+    "name": "Close-Grip Bench Press",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 8,
+    "description": "Barbell press holding grip inside shoulder-width to load triceps.",
+    "instructions": [
+      "Lie on bench, grip bar exactly shoulder-width apart.",
+      "Lower bar slowly to mid-chest, keeping elbows tucked tight to ribs.",
+      "Press bar up, focusing on locking out triceps."
+    ]
+  },
+  {
+    "id": "tricep_pushdown_rope",
+    "name": "Tricep Pushdown (Cable Rope)",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 4,
+    "defaultReps": 12,
+    "description": "Using cable rope to push down, flaring rope ends apart at extension.",
+    "instructions": [
+      "Stand facing stack, hold rope ends. Pin elbows to ribs.",
+      "Push rope down, expanding ends wide at the bottom.",
+      "Slowly return up to chest height, keeping elbows stationary."
+    ]
+  },
+  {
+    "id": "tricep_pushdown_bar",
+    "name": "Tricep Pushdown (Straight Bar)",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 4,
+    "defaultReps": 12,
+    "description": "Straight bar pushdown to lock out maximum tricep loads.",
+    "instructions": [
+      "Hold straight bar overhand, elbows at 90 degrees pinned to sides.",
+      "Push bar straight down to thighs, squeezing triceps.",
+      "Return slow, maintaining elbow position."
+    ]
+  },
+  {
+    "id": "overhead_dumbbell_extension",
+    "name": "Overhead Dumbbell Extension",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Two-handed overhead extension stretching tricep long head.",
+    "instructions": [
+      "Sit or stand, hold single heavy dumbbell overhead with diamond grip.",
+      "Lower weight behind head, keeping elbows tucked close to ears.",
+      "Extend arms back to vertical lockout."
+    ]
+  },
+  {
+    "id": "skull_crushers_ez_bar",
+    "name": "Skull Crushers (EZ-Bar)",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Lying tricep extension lowering EZ-bar to forehead.",
+    "instructions": [
+      "Lie on flat bench, hold EZ-bar straight up over chest.",
+      "Lower bar slowly by bending at elbows towards forehead or crown.",
+      "Keep elbows pointing forward, press bar back up."
+    ]
+  },
+  {
+    "id": "dumbbell_kickbacks",
+    "name": "Dumbbell Kickbacks",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Bracing on bench, kick dumbbell back until arm is straight.",
+    "instructions": [
+      "Place hand and knee on bench, hinge forward. Pin elbow high.",
+      "Hold dumbbell, kick arm straight back parallel to torso.",
+      "Squeeze tricep, slowly return elbow to 90 degrees."
+    ]
+  },
+  {
+    "id": "tricep_dips",
+    "name": "Tricep Parallel Dips",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 8,
+    "description": "Parallel bar dips keeping body upright to load triceps.",
+    "instructions": [
+      "Support weight on parallel bars, torso vertical.",
+      "Lower under control by bending elbows to 90 degrees.",
+      "Press straight back up, squeezing triceps at lock out."
+    ]
+  },
+  {
+    "id": "bench_dips",
+    "name": "Bench Dips",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Supporting hands on bench behind body, feet on floor, lower hips.",
+    "instructions": [
+      "Place palms on edge of bench, feet extended in front.",
+      "Lower hips toward floor by bending elbows to 90 degrees.",
+      "Press through palms to return to starting height."
+    ]
+  },
+  {
+    "id": "cable_overhead_extension",
+    "name": "Cable Overhead Extension",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Overhead rope extension pulling from low pulley.",
+    "instructions": [
+      "Hold rope, turn away from low pulley, brace in lunge.",
+      "Lower rope behind head, elbows pointing forward.",
+      "Extend arms forward and upward to lockout."
+    ]
+  },
+  {
+    "id": "single_arm_cable_pushdown",
+    "name": "Single-Arm Cable Pushdown",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Unilateral pushdown to correct tricep strength imbalances.",
+    "instructions": [
+      "Hold single handle from high pulley, pin elbow to side.",
+      "Press hand straight down to thigh.",
+      "Release slowly back to starting angle."
+    ]
+  },
+  {
+    "id": "machine_tricep_extension",
+    "name": "Machine Tricep Extension",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Seated tricep extension machine isolating contraction.",
+    "instructions": [
+      "Adjust seat, sit and place elbows flat on pad.",
+      "Hold handles and push weights downward/forward.",
+      "Extend fully, release slowly."
+    ]
+  },
+  {
+    "id": "diamond_pushups",
+    "name": "Diamond Pushups",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Pushups placing thumbs and indexes together forming a diamond.",
+    "instructions": [
+      "Set high plank with hands close, forming diamond on floor.",
+      "Lower chest to hands, keeping elbows tucked.",
+      "Press up, locking triceps."
+    ]
+  },
+  {
+    "id": "single_arm_overhead_dumbbell_extension",
+    "name": "Single-Arm Overhead Dumbbell Extension",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Unilateral overhead extension isolating tricep.",
+    "instructions": [
+      "Sit/stand holding dumbbell straight up in one hand.",
+      "Lower behind neck, supporting elbow with other hand.",
+      "Press up vertically."
+    ]
+  },
+  {
+    "id": "tate_press",
+    "name": "Dumbbell Tate Press",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Lying, flare elbows wide and press dumbbells inwards and up.",
+    "instructions": [
+      "Lie on flat bench holding dumbbells together over chest.",
+      "Lower weights inward towards chest by flaring elbows out.",
+      "Press dumbbells back up vertically."
+    ]
+  },
+  {
+    "id": "jm_press",
+    "name": "Barbell JM Press",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 8,
+    "description": "Bench press/skull crusher hybrid lowering bar to chin.",
+    "instructions": [
+      "Set up as close grip bench press.",
+      "Lower bar straight to throat/chin, bending elbows forward.",
+      "Press back up dynamically."
+    ]
+  },
+  {
+    "id": "cable_kickbacks",
+    "name": "Cable Kickbacks",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Tricep kickbacks pulling from a low cable stack.",
+    "instructions": [
+      "Hinge forward at cable stack, pin elbow high.",
+      "Kick handle back, extending tricep completely.",
+      "Release slowly, maintaining high elbow."
+    ]
+  },
+  {
+    "id": "assisted_dip_machine",
+    "name": "Assisted Dip Machine (Triceps)",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Machine counterweight tricep dips.",
+    "instructions": [
+      "Stand on pad, grab handles keeping chest upright.",
+      "Lower until elbows are at 90 degrees.",
+      "Push down to lift yourself back to starting."
+    ]
+  },
+  {
+    "id": "lying_dumbbell_tricep_extension",
+    "name": "Lying Dumbbell Extension",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Lying flat dumbbell skull crushers.",
+    "instructions": [
+      "Lie flat, hold dumbbells over shoulders, palms face each other.",
+      "Lower weights past ears by pivoting at elbows.",
+      "Extend back to vertical."
+    ]
+  },
+  {
+    "id": "reverse_grip_tricep_pushdown",
+    "name": "Reverse Grip Tricep Pushdown",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Underhand pushdown on cable bar.",
+    "instructions": [
+      "Hold straight bar underhand (supinated), elbow pinned.",
+      "Press down to thighs, locking out triceps.",
+      "Return slow, keeping wrists firm."
+    ]
+  },
+  {
+    "id": "dumbbell_floor_press",
+    "name": "Dumbbell Floor Press",
+    "region": "tris",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 8,
+    "description": "Floor press restricting shoulder range to load tricep lockout.",
+    "instructions": [
+      "Lie on floor, hold dumbbells at chest height, elbows on ground.",
+      "Press dumbbells up, locking out.",
+      "Lower until triceps rest flat on floor before resetting."
+    ]
+  },
+
+  {
+    "id": "overhead_barbell_press",
+    "name": "Overhead Barbell Press",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 6,
+    "description": "Standing barbell press (Military Press) targeting total shoulder size.",
+    "instructions": [
+      "Rack bar at shoulder height. Grip bar overhand, wrists stacked.",
+      "Squeeze glutes and core, pull face back.",
+      "Press bar straight up overhead, pushing head through at lockout."
+    ]
+  },
+  {
+    "id": "seated_dumbbell_press",
+    "name": "Seated Dumbbell Press",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Seated vertical dumbbell press targeting front and lateral deltoids.",
+    "instructions": [
+      "Sit holding dumbbells at shoulder level, elbows flared out.",
+      "Press weights straight up overhead, converging slightly.",
+      "Lower weights slowly back to shoulder height."
+    ]
+  },
+  {
+    "id": "dumbbell_lateral_raise",
+    "name": "Dumbbell Lateral Raise",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 4,
+    "defaultReps": 12,
+    "description": "Raising dumbbells outward to build side delt width.",
+    "instructions": [
+      "Stand holding dumbbells at sides, lean slightly forward.",
+      "Raise arms out to sides in a wide arc, leading with elbows.",
+      "Stop when arms are parallel to the floor, lower slowly."
+    ]
+  },
+  {
+    "id": "dumbbell_front_raise",
+    "name": "Dumbbell Front Raise",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Raising dumbbells forward to target the anterior (front) deltoids.",
+    "instructions": [
+      "Stand holding dumbbells in front of thighs, palms facing back.",
+      "Raise weights forward until arms are parallel to floor.",
+      "Lower under control, keeping torso steady."
+    ]
+  },
+  {
+    "id": "rear_delt_fly_dumbbell",
+    "name": "Rear Delt Dumbbell Fly",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 4,
+    "defaultReps": 12,
+    "description": "Bent over or chest-supported dumbbell raises targeting rear delts.",
+    "instructions": [
+      "Hinge forward at hips (flat back) or lie chest down on incline bench.",
+      "Hold dumbbells, fly arms out to sides, pinching shoulder blades.",
+      "Lower weights slowly, keeping tension on rear delts."
+    ]
+  },
+  {
+    "id": "rear_delt_fly_machine",
+    "name": "Rear Delt Machine Fly (Reverse Pec Deck)",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Using pec deck fly machine in reverse to isolate rear delts.",
+    "instructions": [
+      "Sit facing the pad. Adjust arms so they start in front.",
+      "Fly hands out and back in wide arc.",
+      "Squeeze rear delts, return slowly."
+    ]
+  },
+  {
+    "id": "cable_lateral_raise",
+    "name": "Cable Lateral Raise",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Constant tension lateral raise using low pulley.",
+    "instructions": [
+      "Stand next to cable, pull single handle across front of body.",
+      "Raise handle outwards and up, keeping arm straight.",
+      "Lower under control, resisting cable pull."
+    ]
+  },
+  {
+    "id": "barbell_upright_row",
+    "name": "Barbell Upright Row",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Pulling barbell up to collarbone, leading with elbows.",
+    "instructions": [
+      "Grip bar overhand, slightly narrower than shoulder-width.",
+      "Pull bar vertically up body to chest level, elbows pointing high.",
+      "Lower bar slowly, keeping shoulders down."
+    ]
+  },
+  {
+    "id": "dumbbell_upright_row",
+    "name": "Dumbbell Upright Row",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Vertical upright pull using dumbbells for shoulder width.",
+    "instructions": [
+      "Hold dumbbells in front of thighs.",
+      "Pull weights up along torso, elbows tracking high.",
+      "Lower under control."
+    ]
+  },
+  {
+    "id": "arnold_press",
+    "name": "Arnold Press",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Overhead dumbbell press incorporating rotation to hit all three delt heads.",
+    "instructions": [
+      "Sit holding dumbbells, palms facing you (like top of bicep curl).",
+      "As you press up, rotate wrists outward so palms face forward.",
+      "Reverse rotation on descent to return to start."
+    ]
+  },
+  {
+    "id": "push_press",
+    "name": "Barbell Push Press",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 6,
+    "description": "Overhead press using leg drive to propel heavy bar.",
+    "instructions": [
+      "Hold barbell at chest height. Dip hips slightly (quarter squat).",
+      "Drive legs up explosively, transferring power into overhead press.",
+      "Lock bar out overhead, lower under control."
+    ]
+  },
+  {
+    "id": "face_pulls",
+    "name": "Cable Face Pulls",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 4,
+    "defaultReps": 15,
+    "description": "Rope face pulls for shoulder health, upper back, and rear delts.",
+    "instructions": [
+      "Set pulley at eye height, grab rope ends thumbs back.",
+      "Pull rope to nose, flaring hands out and pinching shoulder blades.",
+      "Hold, rotate wrists up slightly, then return."
+    ]
+  },
+  {
+    "id": "cable_front_raise",
+    "name": "Cable Front Raise",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Front raise using low pulley between legs.",
+    "instructions": [
+      "Straddle low cable, hold straight bar or rope.",
+      "Raise bar straight up in front of you to eye level.",
+      "Lower slowly, keeping core tight."
+    ]
+  },
+  {
+    "id": "machine_shoulder_press",
+    "name": "Machine Shoulder Press",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Seated shoulder press machine.",
+    "instructions": [
+      "Adjust seat, sit and hold grips near ears.",
+      "Press handles vertically upwards to lockout.",
+      "Control weights back to starting."
+    ]
+  },
+  {
+    "id": "seated_barbell_press",
+    "name": "Seated Barbell Press",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 4,
+    "defaultReps": 8,
+    "description": "Seated barbell shoulder press.",
+    "instructions": [
+      "Sit on utility bench, unrack bar at shoulder height.",
+      "Press bar overhead to full lockout.",
+      "Lower slowly to collarbones."
+    ]
+  },
+  {
+    "id": "smith_machine_shoulder_press",
+    "name": "Smith Machine Shoulder Press",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Guarded shoulder press on Smith machine track.",
+    "instructions": [
+      "Align bench under Smith bar. Grip bar wide.",
+      "Unlock bar and lower to upper chest.",
+      "Press back up to lock out."
+    ]
+  },
+  {
+    "id": "reverse_cable_flys",
+    "name": "Reverse Cable Flys",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Cross cable flys for rear delts.",
+    "instructions": [
+      "Cross arms to grab opposite cables (no handles).",
+      "Fly hands out and back, arms parallel to floor.",
+      "Return slow, crossing hands."
+    ]
+  },
+  {
+    "id": "single_arm_lateral_raise",
+    "name": "Single-Arm Dumbbell Lateral Raise",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Unilateral lateral raise leaning away from pole.",
+    "instructions": [
+      "Hold onto pole, lean body away at angle.",
+      "Drape weight down, raise dumbbell out to parallel.",
+      "Lower under control."
+    ]
+  },
+  {
+    "id": "dumbbell_y_raise",
+    "name": "Dumbbell Y-Raise",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "fly",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Incline bench raise in a 'Y' shape to target lower traps and lateral delts.",
+    "instructions": [
+      "Lie face down on incline bench.",
+      "Raise dumbbells forward and out at a 45-degree angle (forming a 'Y').",
+      "Squeeze, then return slowly."
+    ]
+  },
+  {
+    "id": "landmine_shoulder_press",
+    "name": "Landmine Shoulder Press",
+    "region": "shoulders",
+    "category": "strength",
+    "visualKey": "press",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Single arm landmine shoulder press.",
+    "instructions": [
+      "Stand, grip bar at shoulder height.",
+      "Press forward and up into lockout.",
+      "Lower under control."
+    ]
+  },
+
+  {
+    "id": "barbell_back_squat",
+    "name": "Barbell Back Squat",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "squat",
+    "defaultSets": 4,
+    "defaultReps": 8,
+    "description": "Classic leg compound loading quads, hamstrings, glutes, and core.",
+    "instructions": [
+      "Rest bar on traps, stand feet shoulder-width.",
+      "Send hips back, bend knees, and lower until thighs are parallel to floor.",
+      "Keep knees aligned with toes, chest up.",
+      "Drive back up through mid-foot to stand."
+    ]
+  },
+  {
+    "id": "barbell_front_squat",
+    "name": "Barbell Front Squat",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "squat",
+    "defaultSets": 4,
+    "defaultReps": 6,
+    "description": "Barbell loaded on front rack shifting load to quads and core.",
+    "instructions": [
+      "Rest bar on front of shoulders, elbows pointing high.",
+      "Lower into deep squat, keeping torso vertical.",
+      "Drive straight up, keeping elbows high."
+    ]
+  },
+  {
+    "id": "goblet_squat",
+    "name": "Dumbbell Goblet Squat",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "squat",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Holding dumbbell vertically at chest to practice squat depth.",
+    "instructions": [
+      "Hold dumbbell close to chest, stand feet shoulder-width.",
+      "Squat down until elbows brush inner knees.",
+      "Stand back up, squeezing glutes."
+    ]
+  },
+  {
+    "id": "leg_press_machine",
+    "name": "Leg Press Machine",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "squat",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Sled leg press to overload quads and glutes safely.",
+    "instructions": [
+      "Sit in machine, place feet shoulder-width on platform.",
+      "Release safety, lower platform until knees reach 90 degrees.",
+      "Press platform up powerfully without locking out knees."
+    ]
+  },
+  {
+    "id": "hack_squat_machine",
+    "name": "Hack Squat Machine",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "squat",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Incline hack squat machine focusing on quad development.",
+    "instructions": [
+      "Lean back against pad, place shoulders under pads, feet on sled.",
+      "Release safety, lower sled down as deep as comfortable.",
+      "Drive weight up, extending knees and hips."
+    ]
+  },
+  {
+    "id": "romanian_deadlift_barbell",
+    "name": "Romanian Deadlift (Barbell)",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 4,
+    "defaultReps": 8,
+    "description": "Hip hinge pulling from standing to isolate hamstrings and glutes.",
+    "instructions": [
+      "Stand tall holding barbell, soft bend in knees.",
+      "Push hips back, sliding bar down thighs to shins.",
+      "Keep back completely flat. Squeeze hamstrings/glutes to return to stand."
+    ]
+  },
+  {
+    "id": "romanian_deadlift_dumbbell",
+    "name": "Romanian Deadlift (Dumbbell)",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Dumbbell hip hinge to build hamstrings and glutes.",
+    "instructions": [
+      "Hold dumbbells in front of thighs.",
+      "Hinge hips back, slide dumbbells down close to legs.",
+      "Drive hips forward to return to standing upright."
+    ]
+  },
+  {
+    "id": "leg_extensions_machine",
+    "name": "Leg Extensions (Machine)",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 4,
+    "defaultReps": 12,
+    "description": "Seated machine leg extension to isolate quadriceps.",
+    "instructions": [
+      "Sit in machine, pad aligned on top of ankles.",
+      "Extend legs straight out, squeezing quads at peak.",
+      "Lower under control back to starting angle."
+    ]
+  },
+  {
+    "id": "seated_leg_curls",
+    "name": "Seated Leg Curls (Machine)",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Seated machine curl isolating hamstring contraction.",
+    "instructions": [
+      "Sit in machine, leg secured. Pull roller pad down behind ankles.",
+      "Squeeze hamstrings, holding brief contraction at bottom.",
+      "Slowly extend legs back to straight."
+    ]
+  },
+  {
+    "id": "lying_leg_curls",
+    "name": "Lying Leg Curls (Machine)",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Lying machine curl isolating hamstrings.",
+    "instructions": [
+      "Lie face down on machine, ankles under roller pad.",
+      "Curl heels up to glutes, keeping hips pressed down.",
+      "Extend legs back slowly."
+    ]
+  },
+  {
+    "id": "walking_lunges",
+    "name": "Walking Lunges",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "squat",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Dynamic lunges holding dumbbells to build leg coordination.",
+    "instructions": [
+      "Stand holding dumbbells. Step forward into lunge.",
+      "Lower back knee to floor, keeping front knee at 90 degrees.",
+      "Push through front foot to step forward into next lunge."
+    ]
+  },
+  {
+    "id": "bulgarian_split_squat",
+    "name": "Bulgarian Split Squat",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "squat",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Single-leg squat bracing rear foot on bench to overload glutes and quads.",
+    "instructions": [
+      "Hold dumbbells, place rear foot flat on bench behind you.",
+      "Lower body until front thigh is parallel to floor.",
+      "Drive back up through front heel."
+    ]
+  },
+  {
+    "id": "calf_raises_standing",
+    "name": "Calf Raises (Standing Machine)",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 4,
+    "defaultReps": 15,
+    "description": "Standing calf machine to load gastrocnemius calf muscle.",
+    "instructions": [
+      "Place shoulders under pads, balls of feet on block.",
+      "Lower heels below block to feel deep calf stretch.",
+      "Extend ankles high onto toes, squeezing calves."
+    ]
+  },
+  {
+    "id": "seated_calf_raises",
+    "name": "Seated Calf Raises (Machine)",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Seated machine calf raise targeting soleus muscle.",
+    "instructions": [
+      "Sit in machine, pads on knees. Lower heels down.",
+      "Push up through toes, release safety.",
+      "Lower heels, press back up, squeeze."
+    ]
+  },
+  {
+    "id": "glute_bridges",
+    "name": "Glute Bridges",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Bodyweight hip lift to activate glutes and hamstrings.",
+    "instructions": [
+      "Lie on back, knees bent, feet flat on floor close to glutes.",
+      "Drive hips up, squeezing glutes at peak.",
+      "Lower slow to floor."
+    ]
+  },
+  {
+    "id": "barbell_hip_thrusts",
+    "name": "Barbell Hip Thrusts",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "deadlift",
+    "defaultSets": 4,
+    "defaultReps": 10,
+    "description": "Bracing shoulders on bench, drive loaded barbell upwards with hips.",
+    "instructions": [
+      "Sit on floor, upper back against bench, load bar over hips (use pad).",
+      "Drive feet down, lift hips until torso is parallel to floor.",
+      "Squeeze glutes at top, lower under control."
+    ]
+  },
+  {
+    "id": "step_ups",
+    "name": "Dumbbell Step-ups",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "squat",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Stepping onto box with dumbbells to develop unilateral power.",
+    "instructions": [
+      "Hold dumbbells, place one foot on box.",
+      "Step up, pushing through box foot to bring other foot up.",
+      "Step down slowly, maintaining balance."
+    ]
+  },
+  {
+    "id": "leg_press_calf_raises",
+    "name": "Leg Press Calf Raises",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "extension",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Calf press using leg press machine platform.",
+    "instructions": [
+      "Sit in leg press, place balls of feet on bottom edge of platform.",
+      "Push sled, lock safety. Flex ankles to push platform away.",
+      "Lower slowly, stretching calves."
+    ]
+  },
+  {
+    "id": "bodyweight_squats",
+    "name": "Bodyweight Squats",
+    "region": "legs",
+    "category": "strength",
+    "visualKey": "squat",
+    "defaultSets": 3,
+    "defaultReps": 20,
+    "description": "Unloaded squats to practice mobility and target high-rep burn.",
+    "instructions": [
+      "Stand feet shoulder-width.",
+      "Lower down, hips below knees, chest proud.",
+      "Drive back up to standing."
+    ]
+  },
+
+  {
+    "id": "ab_crunch",
+    "name": "Abdominal Crunch",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Standard floor crunch isolating upper abdominals.",
+    "instructions": [
+      "Lie on back, knees bent, hands supporting neck gently.",
+      "Lift shoulder blades off floor, contracting abs.",
+      "Lower slowly, keeping neck relaxed."
+    ]
+  },
+  {
+    "id": "hanging_leg_raise",
+    "name": "Hanging Leg Raise",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Hanging from bar, raise legs straight out to parallel.",
+    "instructions": [
+      "Hang from pullup bar, body straight.",
+      "Raise legs together, keeping them straight, until parallel to floor.",
+      "Lower slowly, avoiding swinging."
+    ]
+  },
+  {
+    "id": "hanging_knee_raise",
+    "name": "Hanging Knee Raise",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Hanging from bar, tuck knees up to chest.",
+    "instructions": [
+      "Hang from bar, pull knees up towards chest.",
+      "Squeeze abs at peak, lower legs back to vertical."
+    ]
+  },
+  {
+    "id": "decline_bench_crunch",
+    "name": "Decline Bench Crunch",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Crunches on decline bench to increase load on ab wall.",
+    "instructions": [
+      "Secure feet on decline bench, lie back.",
+      "Crunch torso up, keeping abs contracted.",
+      "Lower back down under control."
+    ]
+  },
+  {
+    "id": "plank",
+    "name": "Standard Elbow Plank",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "hold",
+    "defaultSets": 3,
+    "defaultReps": 60,
+    "description": "Isometric core hold building absolute abdominal stability.",
+    "instructions": [
+      "Support weight on forearms and toes, body in a straight line.",
+      "Squeeze glutes, tuck pelvis, pull belly button in.",
+      "Hold position, breathing shallowly (default time in seconds)."
+    ]
+  },
+  {
+    "id": "side_plank",
+    "name": "Side Plank",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "hold",
+    "defaultSets": 3,
+    "defaultReps": 45,
+    "description": "Lateral isometric hold targeting obliques.",
+    "instructions": [
+      "Lie on side, prop torso on elbow.",
+      "Lift hips, forming straight line from head to feet.",
+      "Hold, then switch sides."
+    ]
+  },
+  {
+    "id": "russian_twists",
+    "name": "Russian Twists",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 20,
+    "description": "Seated twisting motions targeting rotational core and obliques.",
+    "instructions": [
+      "Sit on floor, lean back 45 degrees, hover feet off floor.",
+      "Hold hands or a dumbbell together, twist torso side to side.",
+      "Tap floor on each side, keeping core locked."
+    ]
+  },
+  {
+    "id": "cable_crunch_kneeling",
+    "name": "Cable Crunch (Kneeling)",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Kneeling cable pull to crunch abs against stack resistance.",
+    "instructions": [
+      "Kneel facing stack, hold rope ends next to ears/head.",
+      "Flex spine, pulling elbows down to thighs using abs.",
+      "Return slow, keeping hips locked."
+    ]
+  },
+  {
+    "id": "woodchoppers_cable",
+    "name": "Cable Woodchoppers",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Rotational cable pull across body.",
+    "instructions": [
+      "Stand side to cable, hold handle with both hands.",
+      "Pull cable diagonally down and across body, rotating torso.",
+      "Return slow. Complete sets on both sides."
+    ]
+  },
+  {
+    "id": "ab_wheel_rollouts",
+    "name": "Ab Wheel Rollouts",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "hold",
+    "defaultSets": 3,
+    "defaultReps": 8,
+    "description": "Rolling ab wheel out to extend torso, challenging core brace.",
+    "instructions": [
+      "Kneel on floor, hold ab wheel handles below shoulders.",
+      "Roll wheel forward, extending body in straight line close to floor.",
+      "Pull wheel back, engaging abs (do not sag lower back)."
+    ]
+  },
+  {
+    "id": "flutter_kicks",
+    "name": "Flutter Kicks",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 30,
+    "description": "Lying, hover feet and flutter them vertically.",
+    "instructions": [
+      "Lie on back, hands under hips, head slightly up.",
+      "Raise feet 6 inches, kick them up and down in alternating flutter."
+    ]
+  },
+  {
+    "id": "bicycle_crunches",
+    "name": "Bicycle Crunches",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 20,
+    "description": "Alternating crunch touching opposite elbow to knee.",
+    "instructions": [
+      "Lie on back, hover legs, hands behind head.",
+      "Bring left elbow to right knee, extending left leg straight.",
+      "Switch to right elbow to left knee, keeping movement fluid."
+    ]
+  },
+  {
+    "id": "toe_touches",
+    "name": "Toe Touches",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Lying, raise legs vertically and crunch up to touch toes.",
+    "instructions": [
+      "Lie on back, point legs straight up to ceiling.",
+      "Reach hands up to touch toes, lifting shoulder blades."
+    ]
+  },
+  {
+    "id": "leg_raises_flat_bench",
+    "name": "Flat Bench Leg Raises",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Lying on bench, raise legs from horizontal to vertical.",
+    "instructions": [
+      "Lie flat on bench, hold top of bench behind head.",
+      "Raise legs up to vertical, lower them back to bench height under control."
+    ]
+  },
+  {
+    "id": "dead_bug",
+    "name": "Dead Bug",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "hold",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Lying core control alternating opposite arm and leg drops.",
+    "instructions": [
+      "Lie on back, arms vertical, knees bent at 90 degrees.",
+      "Lower left arm and right leg until hovering above floor.",
+      "Return to start, repeat with right arm and left leg."
+    ]
+  },
+  {
+    "id": "captains_chair_knee_raise",
+    "name": "Captain's Chair Knee Raise",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Supporting body on captain's chair pads, pull knees high.",
+    "instructions": [
+      "Support yourself on arm pads, back against support.",
+      "Pull knees up towards chest, lower slowly."
+    ]
+  },
+  {
+    "id": "v_ups",
+    "name": "V-Ups",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Fold body into a 'V' shape, raising torso and legs together.",
+    "instructions": [
+      "Lie flat, arms extended behind head.",
+      "Lift torso and legs together to touch feet at peak.",
+      "Lower under control back to flat."
+    ]
+  },
+  {
+    "id": "reverse_crunches",
+    "name": "Reverse Crunches",
+    "region": "abs",
+    "category": "strength",
+    "visualKey": "raise",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Pull hips off floor towards ribs to focus on lower abs.",
+    "instructions": [
+      "Lie on floor, arms flat, knees bent.",
+      "Pull knees towards chest, lifting hips off floor.",
+      "Lower hips back down slowly."
+    ]
+  },
+
+  {
+    "id": "wrist_curls_barbell",
+    "name": "Barbell Wrist Curls",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Bracing forearms on bench, curl barbell up using wrists.",
+    "instructions": [
+      "Rest forearms on flat bench, hands hanging over edge, palms up.",
+      "Hold barbell, let it roll to fingertips, curl wrists up.",
+      "Lower bar slowly, repeating motion."
+    ]
+  },
+  {
+    "id": "reverse_wrist_curls_barbell",
+    "name": "Reverse Barbell Wrist Curls",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Bracing forearms on bench, curl barbell up overhand.",
+    "instructions": [
+      "Rest forearms on bench, hands hanging over edge, palms down.",
+      "Curl wrists up to raise the bar.",
+      "Lower slowly."
+    ]
+  },
+  {
+    "id": "wrist_curls_dumbbell",
+    "name": "Dumbbell Wrist Curls",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Dumbbell wrist curls to build flexors.",
+    "instructions": [
+      "Rest forearm on thigh or bench, palm up, holding dumbbell.",
+      "Curl wrist up, lower under control."
+    ]
+  },
+  {
+    "id": "reverse_wrist_curls_dumbbell",
+    "name": "Reverse Dumbbell Wrist Curls",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Dumbbell wrist curls overhand to build extensors.",
+    "instructions": [
+      "Rest forearm on thigh/bench, palm down.",
+      "Curl wrist up to lift dumbbell."
+    ]
+  },
+  {
+    "id": "wrist_roller",
+    "name": "Wrist Roller",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 3,
+    "description": "Roll weight up and down a dowel to build forearm endurance.",
+    "instructions": [
+      "Hold roller arms straight out, weight hanging.",
+      "Rotate wrists to wind cable up, lifting weight.",
+      "Slowly reverse rotation to unwind weight (1 up and down = 1 rep)."
+    ]
+  },
+  {
+    "id": "farmers_walk",
+    "name": "Farmer's Walk",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "hold",
+    "defaultSets": 3,
+    "defaultReps": 60,
+    "description": "Carry heavy dumbbells to build crush grip and traps (default time in seconds).",
+    "instructions": [
+      "Grip heavy dumbbells, stand tall.",
+      "Walk in a straight line with short, quick steps.",
+      "Keep shoulders packed and grip tight."
+    ]
+  },
+  {
+    "id": "plate_pinches",
+    "name": "Plate Pinches",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "hold",
+    "defaultSets": 3,
+    "defaultReps": 45,
+    "description": "Pinch weight plates between thumb and fingers (default time in seconds).",
+    "instructions": [
+      "Pinch two weight plates smooth-sides-out between fingers and thumb.",
+      "Hold plates off floor, maintaining pinch pressure."
+    ]
+  },
+  {
+    "id": "behind_back_wrist_curls",
+    "name": "Behind-the-Back Wrist Curls",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Hold barbell behind thighs, curl wrists up.",
+    "instructions": [
+      "Stand holding barbell behind glutes, palms facing back.",
+      "Let bar slide down fingers, curl wrists up to squeeze forearms.",
+      "Lower under control."
+    ]
+  },
+  {
+    "id": "towel_pullups",
+    "name": "Towel Pullups",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "row",
+    "defaultSets": 3,
+    "defaultReps": 6,
+    "description": "Pullups gripping a hanging towel to build maximum squeeze grip strength.",
+    "instructions": [
+      "Drape a towel over a pullup bar, grip both hanging sides.",
+      "Perform pullups, squeezing the towel hard to stay supported."
+    ]
+  },
+  {
+    "id": "dead_hangs",
+    "name": "Dead Hangs",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "hold",
+    "defaultSets": 3,
+    "defaultReps": 60,
+    "description": "Hang from bar to develop endurance grip (default time in seconds).",
+    "instructions": [
+      "Hang from pullup bar with overhand grip.",
+      "Keep shoulders active, hold as long as possible."
+    ]
+  },
+  {
+    "id": "single_arm_dead_hangs",
+    "name": "Single-Arm Dead Hangs",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "hold",
+    "defaultSets": 3,
+    "defaultReps": 30,
+    "description": "Hang from bar with a single hand (default time in seconds).",
+    "instructions": [
+      "Hang from bar using one hand, keep core locked.",
+      "Hold, switch to other arm."
+    ]
+  },
+  {
+    "id": "pinwheel_curls",
+    "name": "Pinwheel Curls",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 10,
+    "description": "Hammer curl raising dumbbells diagonally across chest.",
+    "instructions": [
+      "Hold dumbbell at side, curl weight diagonally across chest towards opposite shoulder.",
+      "Lower under control, alternate arms."
+    ]
+  },
+  {
+    "id": "suitcase_carry",
+    "name": "Suitcase Carry",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "hold",
+    "defaultSets": 3,
+    "defaultReps": 60,
+    "description": "Unilateral carry walking with single heavy dumbbell (default time in seconds).",
+    "instructions": [
+      "Carry single heavy dumbbell in one hand.",
+      "Walk maintaining vertical spine, core resisting tilt."
+    ]
+  },
+  {
+    "id": "reverse_cable_curls",
+    "name": "Reverse Cable Curls",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 12,
+    "description": "Overhand curl pulling straight bar from low pulley.",
+    "instructions": [
+      "Grip low pulley straight bar overhand.",
+      "Curl bar up, keeping wrists firm and straight.",
+      "Extend slowly back down."
+    ]
+  },
+  {
+    "id": "wrist_rotations",
+    "name": "Dumbbell Wrist Rotations",
+    "region": "forearms",
+    "category": "strength",
+    "visualKey": "curl",
+    "defaultSets": 3,
+    "defaultReps": 15,
+    "description": "Holding dumbbells, rotate wrists from supination to pronation.",
+    "instructions": [
+      "Hold dumbbell in one hand, forearms rested flat on bench.",
+      "Slowly rotate wrists back and forth side to side."
+    ]
+  },
+
+  {
+    "id": "run_liss",
+    "name": "Low-Intensity Steady-State (LISS) Run",
+    "region": "running",
+    "category": "cardio",
+    "visualKey": "run",
+    "defaultSets": 1,
+    "defaultReps": 30,
+    "description": "Aerobic base building run at a comfortable, conversational pace.",
+    "instructions": [
+      "Warm up with a 5-minute brisk walk.",
+      "Run at an easy pace where you can hold a full conversation.",
+      "Maintain a steady, comfortable stride (default target in minutes)."
+    ]
+  },
+  {
+    "id": "run_tempo",
+    "name": "Tempo Run",
+    "region": "running",
+    "category": "cardio",
+    "visualKey": "run",
+    "defaultSets": 1,
+    "defaultReps": 20,
+    "description": "Challenging run at 'comfortably hard' threshold pace to build speed endurance.",
+    "instructions": [
+      "Warm up with 10 minutes of easy running.",
+      "Accelerate to your threshold pace (about 8/10 effort).",
+      "Hold pace for target duration, then cool down."
+    ]
+  },
+  {
+    "id": "run_intervals",
+    "name": "Sprint Intervals (HIIT)",
+    "region": "running",
+    "category": "cardio",
+    "visualKey": "run",
+    "defaultSets": 6,
+    "defaultReps": 60,
+    "description": "High-intensity running intervals to build anaerobic power.",
+    "instructions": [
+      "Warm up with 5 minutes of jogging.",
+      "Sprint at 95% effort for target duration (seconds).",
+      "Walk/jog slowly for double the duration to recover (repeat sets)."
+    ]
+  },
+  {
+    "id": "run_recovery",
+    "name": "Recovery Jog",
+    "region": "running",
+    "category": "cardio",
+    "visualKey": "run",
+    "defaultSets": 1,
+    "defaultReps": 20,
+    "description": "Short, ultra-easy jog to promote blood flow and recovery.",
+    "instructions": [
+      "Run at an extremely relaxed, slow pace.",
+      "Focus on light footwork and deep breathing.",
+      "Do not push speed; let muscles relax."
+    ]
+  }
+]
