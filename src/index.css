@@ -93,7 +93,7 @@ body {
 .scrollable {
   flex: 1;
   overflow-y: auto;
-  padding: calc(var(--safe-top) + 15px) 16px calc(var(--safe-bottom) + 80px) 16px;
+  padding: calc(var(--safe-top) + 60px) 16px calc(var(--safe-bottom) + 80px) 16px;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }

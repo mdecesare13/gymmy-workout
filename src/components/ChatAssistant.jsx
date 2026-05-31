@@ -156,11 +156,12 @@ export default function ChatAssistant({ store }) {
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      backgroundColor: 'var(--shark-950)'
+      backgroundColor: 'var(--shark-950)',
+      paddingTop: 'calc(var(--safe-top) + 44px)'
     }}>
       {/* Header */}
       <div style={{
-        padding: 'calc(var(--safe-top) + 12px) 16px 12px 16px',
+        padding: '12px 16px',
         backgroundColor: 'var(--glass-bg)',
         backdropFilter: 'blur(20px)',
         borderBottom: '1px solid var(--glass-border)',
