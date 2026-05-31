@@ -6,7 +6,6 @@ import PlanBuilder from './components/PlanBuilder';
 import ExerciseLibrary from './components/ExerciseLibrary';
 import StatsDashboard from './components/StatsDashboard';
 import ChatAssistant from './components/ChatAssistant';
-import { Sparkles } from 'lucide-react';
 
 export default function App() {
   const store = useWorkoutStore();
@@ -35,18 +34,17 @@ export default function App() {
       {/* Top iOS Floating Header */}
       <header className="ios-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div style={{
-            backgroundColor: 'var(--gym-red)',
-            width: '28px',
-            height: '28px',
-            borderRadius: '6px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 2px 8px rgba(255, 59, 48, 0.3)'
-          }}>
-            <Sparkles size={16} color="#ffffff" />
-          </div>
+          <img
+            src="/icon-192.png"
+            alt="Gymmy Logo"
+            style={{
+              width: '28px',
+              height: '28px',
+              borderRadius: '6px',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+              objectFit: 'cover'
+            }}
+          />
           <span style={{ fontSize: '19px', fontWeight: '800', letterSpacing: '-0.5px' }}>
             Gymmy
           </span>
