@@ -40,7 +40,7 @@ export default function App() {
             style={{
               width: '28px',
               height: '28px',
-              borderRadius: '6px',
+              borderRadius: '50%',
               boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
               objectFit: 'cover'
             }}
