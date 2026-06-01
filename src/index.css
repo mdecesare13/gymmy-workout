@@ -65,6 +65,12 @@ input, textarea {
   user-select: text;
 }
 
+html {
+  height: 100%;
+  height: -webkit-fill-available;
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-stack);
   background-color: var(--shark-950);
@@ -72,21 +78,30 @@ body {
   overflow: hidden; /* Screen shifting handled within views */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  height: -webkit-fill-available;
 }
 
 #root {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100svh;
-  max-width: 480px; /* Max widths for mobile-first PWA design */
-  margin: 0 auto;
+  height: 100%;
+  height: -webkit-fill-available;
+  width: 100%;
   background-color: var(--shark-900);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-  border-left: 1px solid var(--glass-border);
-  border-right: 1px solid var(--glass-border);
+}
+
+@media (min-width: 480px) {
+  #root {
+    max-width: 480px;
+    margin: 0 auto;
+    height: 100vh;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    border-left: 1px solid var(--glass-border);
+    border-right: 1px solid var(--glass-border);
+  }
 }
 
 /* iOS Spring & Smooth Scroll Physics */
