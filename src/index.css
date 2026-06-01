@@ -90,6 +90,14 @@ body {
   overflow: hidden;
 }
 
+/* Force full viewport height when running as standalone PWA on Home Screen */
+@media (display-mode: standalone) {
+  html, body, #root {
+    height: 100vh !important;
+    height: 100svh !important;
+  }
+}
+
 @media (min-width: 480px) {
   #root {
     max-width: 480px;
