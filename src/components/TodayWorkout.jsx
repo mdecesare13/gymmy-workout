@@ -3,26 +3,73 @@ import FormVisualizer from './FormVisualizer';
 import { Play, Check, Trophy, RefreshCw, HelpCircle, X, ChevronRight } from 'lucide-react';
 
 export default function TodayWorkout({ store }) {
-  const { currentPlan, logWorkoutSession, swapExercise, getSwapAlternatives, getExerciseStats } = store;
+  const { 
+    currentPlan, 
+    logWorkoutSession, 
+    logCardioSession, 
+    swapExercise, 
+    getSwapAlternatives, 
+    getExerciseStats,
+    activeSession,
+    setActiveSession
+  } = store;
 
   // Find today's workout based on current weekday
   const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const todayIndex = (new Date().getDay() + 6) % 7; // Map Sun=0, Mon=1 to Mon=0, Sun=6
   const todayName = weekdays[todayIndex];
 
-  const todayWorkout = currentPlan ? currentPlan[todayIndex] : null;
+  // Active preview day state
+  const [selectedDayIndex, setSelectedDayIndex] = useState(todayIndex);
 
-  // Active workout logging state
-  const [activeSession, setActiveSession] = useState(null); // holds copy of today's exercises
+  const todayWorkout = currentPlan ? currentPlan[selectedDayIndex] : null;
+
+  // Accordion expanded exercise ID state
+  const [expandedExerciseId, setExpandedExerciseId] = useState(null);
+  const [hasInitializedAccordion, setHasInitializedAccordion] = useState(false);
+
+  // Active workout logging UI states
   const [selectedSwapEx, setSelectedSwapEx] = useState(null); // exercise we want to swap
   const [selectedGuideEx, setSelectedGuideEx] = useState(null); // exercise we want to see guide for
   const [showTrophy, setShowTrophy] = useState(false);
+
+  // Cardio specific states
+  const [cardioType, setCardioType] = useState('Run');
+  const [cardioDuration, setCardioDuration] = useState('');
+  const [cardioDistance, setCardioDistance] = useState('');
+  const [cardioNotes, setCardioNotes] = useState('');
+
+  // Auto-expand first incomplete exercise if a session is loaded from store/localStorage
+  useEffect(() => {
+    if (activeSession) {
+      if (!hasInitializedAccordion) {
+        const firstIncomplete = activeSession.exercises.find(ex => 
+          ex.sets.some(s => !s.completed)
+        );
+        if (firstIncomplete) {
+          setExpandedExerciseId(firstIncomplete.id);
+        } else if (activeSession.exercises.length > 0) {
+          setExpandedExerciseId(activeSession.exercises[0].id);
+        }
+        setHasInitializedAccordion(true);
+      }
+    } else {
+      setHasInitializedAccordion(false);
+      setExpandedExerciseId(null);
+    }
+  }, [activeSession, hasInitializedAccordion]);
 
   // Initialize active session exercises
   const startWorkout = () => {
     if (!todayWorkout || todayWorkout.type === 'rest') return;
     
-    // Create deep copy of today's exercises to local state
+    // Reset cardio fields
+    setCardioType('Run');
+    setCardioDuration('');
+    setCardioDistance('');
+    setCardioNotes('');
+    
+    // Create deep copy of target day's exercises to local state
     const copiedExercises = todayWorkout.exercises.map(ex => ({
       ...ex,
       sets: ex.sets.map(s => ({
@@ -32,9 +79,13 @@ export default function TodayWorkout({ store }) {
       }))
     }));
 
+    if (copiedExercises.length > 0) {
+      setExpandedExerciseId(copiedExercises[0].id);
+    }
+
     setActiveSession({
-      dayIndex: todayIndex,
-      dayName: todayName,
+      dayIndex: selectedDayIndex,
+      dayName: weekdays[selectedDayIndex],
       title: todayWorkout.title,
       type: todayWorkout.type,
       exercises: copiedExercises
@@ -116,7 +167,7 @@ export default function TodayWorkout({ store }) {
     setActiveSession(prev => ({ ...prev, exercises: updatedExercises }));
 
     // 2. Persist swap in the global store currentPlan so it remains updated
-    swapExercise(todayIndex, selectedSwapEx.id, alternativeEx);
+    swapExercise(activeSession.dayIndex, selectedSwapEx.id, alternativeEx);
     setSelectedSwapEx(null);
   };
 
@@ -124,11 +175,68 @@ export default function TodayWorkout({ store }) {
   const finishWorkout = () => {
     if (!activeSession) return;
     
-    // Log active sessions matching completion criteria
-    logWorkoutSession(todayIndex, activeSession.exercises);
+    if (activeSession.type === 'run') {
+      logCardioSession(activeSession.dayIndex, cardioType, cardioDuration, cardioDistance, cardioNotes);
+    } else {
+      // Log active sessions matching completion criteria
+      logWorkoutSession(activeSession.dayIndex, activeSession.exercises);
+    }
     setActiveSession(null);
     setShowTrophy(true);
   };
+
+  const toggleExerciseExpand = (exId) => {
+    setExpandedExerciseId(expandedExerciseId === exId ? null : exId);
+  };
+
+  const handleSaveAndNext = (exercise) => {
+    if (!activeSession) return;
+    
+    // 1. Mark all sets of this exercise as complete if they aren't already
+    const updatedExercises = activeSession.exercises.map(ex => {
+      if (ex.id !== exercise.id) return ex;
+
+      const updatedSets = ex.sets.map(s => {
+        if (s.completed) return s;
+        
+        const defaultReps = s.reps || ex.defaultReps || 10;
+        const lastWeightMatch = s.pr?.weight || 0;
+        const weight = s.weight !== '' ? s.weight : lastWeightMatch;
+        const reps = s.reps !== '' ? s.reps : defaultReps;
+
+        return { 
+          ...s, 
+          weight, 
+          reps, 
+          completed: true 
+        };
+      });
+
+      return { ...ex, sets: updatedSets };
+    });
+
+    // Update activeSession state
+    const nextSession = { ...activeSession, exercises: updatedExercises };
+    setActiveSession(nextSession);
+
+    // 2. Find next incomplete exercise to expand
+    const currentIndex = activeSession.exercises.findIndex(ex => ex.id === exercise.id);
+    const nextIncomplete = updatedExercises.find((ex, idx) => idx > currentIndex && ex.sets.some(s => !s.completed));
+    
+    if (nextIncomplete) {
+      setExpandedExerciseId(nextIncomplete.id);
+    } else {
+      // If no next incomplete, expand the very next exercise anyway if it exists
+      const nextEx = activeSession.exercises[currentIndex + 1];
+      if (nextEx) {
+        setExpandedExerciseId(nextEx.id);
+      } else {
+        // No more exercises, collapse all
+        setExpandedExerciseId(null);
+      }
+    }
+  };
+
 
   if (!currentPlan) {
     return (
@@ -179,186 +287,395 @@ export default function TodayWorkout({ store }) {
         </div>
 
         {/* Exercises Scroll Container */}
-        {activeSession.exercises.map((ex) => (
-          <div key={ex.id} className="ios-card" style={{ padding: '16px', marginBottom: '16px' }}>
-            
-            {/* Header section with buttons */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-              <div>
-                <h3 style={{ color: 'var(--shark-100)', fontSize: '16px', textTransform: 'none', marginBottom: '2px', fontWeight: '700' }}>
-                  {ex.name}
-                </h3>
-                <span style={{ fontSize: '11px', color: 'var(--shark-500)', fontWeight: 'bold' }}>
-                  {ex.sets.length} Target Sets • {ex.region.toUpperCase()}
-                </span>
-              </div>
-              
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button
-                  onClick={() => setSelectedGuideEx(ex)}
-                  style={{
-                    backgroundColor: 'var(--shark-700)',
-                    border: '1px solid var(--glass-border)',
-                    borderRadius: '8px',
-                    width: '32px',
-                    height: '32px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    color: 'var(--gym-gold)'
-                  }}
-                  title="Form Guide"
-                >
-                  <HelpCircle size={16} />
-                </button>
-                <button
-                  onClick={() => setSelectedSwapEx(ex)}
-                  style={{
-                    backgroundColor: 'var(--shark-700)',
-                    border: '1px solid var(--glass-border)',
-                    borderRadius: '8px',
-                    width: '32px',
-                    height: '32px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    color: 'var(--gym-red)'
-                  }}
-                  title="Swap Exercise"
-                >
-                  <RefreshCw size={16} />
-                </button>
+        {activeSession.type === 'run' ? (
+          <div className="ios-card" style={{ padding: '20px', marginBottom: '16px' }}>
+            <h3 style={{ color: 'var(--shark-100)', fontSize: '16px', marginBottom: '14px', fontWeight: '700' }}>
+              Log Cardio Session
+            </h3>
+
+            {/* SVG Visualizer */}
+            <div style={{ marginBottom: '18px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
+              <FormVisualizer visualKey={cardioType.toLowerCase()} />
+            </div>
+
+            {/* Capsule selector for Cardio Type */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '18px' }}>
+              <label style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--shark-500)', letterSpacing: '0.5px' }}>ACTIVITY TYPE</label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {[
+                  { id: 'Run', label: '🏃‍♂️ Run' },
+                  { id: 'Bike', label: '🚴‍♂️ Bike' },
+                  { id: 'Elliptical', label: '👟 Elliptical' },
+                  { id: 'Row', label: '🚣‍♂️ Row' },
+                  { id: 'Other', label: '✨ Other' }
+                ].map((option) => {
+                  const selected = cardioType === option.id;
+                  return (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => setCardioType(option.id)}
+                      style={{
+                        padding: '8px 14px',
+                        borderRadius: '20px',
+                        border: selected ? '1px solid var(--gym-red)' : '1px solid var(--glass-border)',
+                        backgroundColor: selected ? 'var(--gym-red)' : 'var(--shark-700)',
+                        color: selected ? '#ffffff' : 'var(--shark-300)',
+                        fontSize: '13px',
+                        fontWeight: selected ? '700' : '500',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      {option.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Set Logging Rows */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {ex.sets.map((set) => {
-                const stats = getExerciseStats(ex.id);
-                const hasLastLog = stats.last;
-                const prWeight = stats.pr?.weight;
-                const prReps = stats.pr?.reps;
-
-                return (
-                  <div
-                    key={set.setNum}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      backgroundColor: 'var(--shark-700)',
-                      borderRadius: '8px',
-                      padding: '8px 12px',
-                      border: set.completed ? '1px solid var(--ios-green)' : '1px solid var(--glass-border)'
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--shark-300)' }}>
-                        Set {set.setNum}
-                      </span>
-                      
-                      {/* Logging Inputs */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <input
-                            type="number"
-                            pattern="[0-9]*"
-                            placeholder="lbs"
-                            value={set.weight}
-                            onChange={(e) => handleSetChange(ex.id, set.setNum, 'weight', e.target.value)}
-                            disabled={set.completed}
-                            style={{
-                              width: '56px',
-                              textAlign: 'center',
-                              backgroundColor: 'var(--shark-800)',
-                              border: '1px solid var(--glass-border)',
-                              borderRadius: '6px',
-                              color: 'var(--shark-100)',
-                              padding: '5px 0',
-                              fontSize: '14px',
-                              outline: 'none'
-                            }}
-                          />
-                          <span style={{ fontSize: '11px', color: 'var(--shark-500)' }}>lbs</span>
-                        </div>
-
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <input
-                            type="number"
-                            pattern="[0-9]*"
-                            placeholder="reps"
-                            value={set.reps}
-                            onChange={(e) => handleSetChange(ex.id, set.setNum, 'reps', e.target.value)}
-                            disabled={set.completed}
-                            style={{
-                              width: '44px',
-                              textAlign: 'center',
-                              backgroundColor: 'var(--shark-800)',
-                              border: '1px solid var(--glass-border)',
-                              borderRadius: '6px',
-                              color: 'var(--shark-100)',
-                              padding: '5px 0',
-                              fontSize: '14px',
-                              outline: 'none'
-                            }}
-                          />
-                          <span style={{ fontSize: '11px', color: 'var(--shark-500)' }}>reps</span>
-                        </div>
-
-                        {/* Check Button */}
-                        <button
-                          onClick={() => toggleSetComplete(ex.id, set.setNum)}
-                          style={{
-                            width: '28px',
-                            height: '28px',
-                            borderRadius: '6px',
-                            border: 'none',
-                            backgroundColor: set.completed ? 'var(--ios-green)' : 'var(--shark-800)',
-                            color: '#ffffff',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            transition: 'background-color 0.15s ease'
-                          }}
-                        >
-                          <Check size={16} strokeWidth={3} />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Previous/PR Stats guidance guide line */}
-                    {(hasLastLog || prWeight) && (
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'flex-start',
-                        gap: '12px',
-                        fontSize: '10px',
-                        color: 'var(--shark-500)',
-                        marginTop: '4px',
-                        borderTop: '1px solid rgba(255,255,255,0.03)',
-                        paddingTop: '4px'
-                      }}>
-                        {hasLastLog && (
-                          <span>
-                            Last: <span style={{ color: 'var(--shark-300)' }}>{stats.last.sets.split(', ')[set.setNum - 1] || stats.last.sets.split(', ')[0]}</span>
-                          </span>
-                        )}
-                        {prWeight && (
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                            <span style={{ color: 'var(--gym-gold)' }}>🏆</span> PR: <span style={{ color: 'var(--gym-gold)', fontWeight: 'bold' }}>{prWeight} lbs x {prReps}</span>
-                          </span>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+            {/* Metrics Row */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '18px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <label style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--shark-500)', letterSpacing: '0.5px' }}>DURATION (MINS)</label>
+                <input
+                  type="number"
+                  pattern="[0-9]*"
+                  placeholder="0"
+                  value={cardioDuration}
+                  onChange={(e) => setCardioDuration(e.target.value)}
+                  style={{
+                    width: '100%',
+                    backgroundColor: 'var(--shark-800)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: '10px',
+                    color: 'var(--shark-100)',
+                    padding: '12px',
+                    fontSize: '18px',
+                    textAlign: 'center',
+                    outline: 'none',
+                    fontWeight: 'bold'
+                  }}
+                />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <label style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--shark-500)', letterSpacing: '0.5px' }}>DISTANCE (MILES)</label>
+                <input
+                  type="number"
+                  step="0.1"
+                  placeholder="0.0"
+                  value={cardioDistance}
+                  onChange={(e) => setCardioDistance(e.target.value)}
+                  style={{
+                    width: '100%',
+                    backgroundColor: 'var(--shark-800)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: '10px',
+                    color: 'var(--shark-100)',
+                    padding: '12px',
+                    fontSize: '18px',
+                    textAlign: 'center',
+                    outline: 'none',
+                    fontWeight: 'bold'
+                  }}
+                />
+              </div>
             </div>
+
+            {/* Notes Box */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '18px' }}>
+              <label style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--shark-500)', letterSpacing: '0.5px' }}>SESSION NOTES / PERFORMANCE</label>
+              <textarea
+                placeholder="Describe your session (e.g. pace, intervals, how you felt)..."
+                value={cardioNotes}
+                onChange={(e) => setCardioNotes(e.target.value)}
+                rows={3}
+                style={{
+                  width: '100%',
+                  backgroundColor: 'var(--shark-800)',
+                  border: '1px solid var(--glass-border)',
+                  borderRadius: '10px',
+                  color: 'var(--shark-100)',
+                  padding: '12px',
+                  fontSize: '14px',
+                  outline: 'none',
+                  resize: 'none',
+                  fontFamily: 'inherit',
+                  lineHeight: '1.4'
+                }}
+              />
+            </div>
+
+
 
           </div>
-        ))}
+        ) : (
+          activeSession.exercises.map((ex) => {
+            const isExpanded = expandedExerciseId === ex.id;
+            const isExCompleted = ex.sets.every(s => s.completed);
+
+            return (
+              <div 
+                key={ex.id} 
+                className="ios-card" 
+                style={{ 
+                  padding: '16px', 
+                  marginBottom: '16px',
+                  border: isExpanded 
+                    ? '1px solid var(--gym-red)' 
+                    : isExCompleted 
+                      ? '1px solid rgba(52, 199, 89, 0.4)' 
+                      : '1px solid var(--glass-border)',
+                  backgroundColor: isExCompleted && !isExpanded 
+                    ? 'rgba(52, 199, 89, 0.04)' 
+                    : 'var(--shark-800)',
+                  transition: 'all 0.25s ease'
+                }}
+              >
+                {/* Accordion Header (Clickable) */}
+                <div 
+                  onClick={() => toggleExerciseExpand(ex.id)}
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center', 
+                    cursor: 'pointer',
+                    userSelect: 'none'
+                  }}
+                >
+                  <div style={{ flex: 1, paddingRight: '8px' }}>
+                    <h3 style={{ 
+                      color: isExCompleted ? 'var(--shark-300)' : 'var(--shark-100)', 
+                      fontSize: '16px', 
+                      textTransform: 'none', 
+                      marginBottom: '2px', 
+                      fontWeight: '700',
+                      textDecoration: isExCompleted && !isExpanded ? 'line-through' : 'none',
+                      opacity: isExCompleted && !isExpanded ? 0.7 : 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}>
+                      {ex.name}
+                      {isExCompleted && (
+                        <span className="badge badge-green" style={{ fontSize: '9px', textTransform: 'uppercase', padding: '1px 4px' }}>
+                          ✓ Done
+                        </span>
+                      )}
+                    </h3>
+                    <span style={{ fontSize: '11px', color: 'var(--shark-500)', fontWeight: 'bold' }}>
+                      {ex.sets.length} Sets • {ex.region.toUpperCase()}
+                    </span>
+                  </div>
+
+                  {/* Dropdown Chevron / indicator */}
+                  <div style={{
+                    color: isExpanded ? 'var(--gym-red)' : 'var(--shark-500)',
+                    transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}>
+                    <ChevronRight size={18} />
+                  </div>
+                </div>
+
+                {/* Accordion Body (Collapsible content) */}
+                {isExpanded && (
+                  <div style={{ marginTop: '16px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '14px' }}>
+                    {/* Header buttons (Form Guide, Swap) */}
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginBottom: '14px' }}>
+                      <button
+                        onClick={() => setSelectedGuideEx(ex)}
+                        style={{
+                          backgroundColor: 'var(--shark-700)',
+                          border: '1px solid var(--glass-border)',
+                          borderRadius: '8px',
+                          padding: '6px 12px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          cursor: 'pointer',
+                          color: 'var(--gym-gold)',
+                          fontSize: '12px',
+                          fontWeight: 'bold'
+                        }}
+                        title="Form Guide"
+                      >
+                        <HelpCircle size={14} />
+                        Form Guide
+                      </button>
+                      <button
+                        onClick={() => setSelectedSwapEx(ex)}
+                        style={{
+                          backgroundColor: 'var(--shark-700)',
+                          border: '1px solid var(--glass-border)',
+                          borderRadius: '8px',
+                          padding: '6px 12px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          cursor: 'pointer',
+                          color: 'var(--gym-red)',
+                          fontSize: '12px',
+                          fontWeight: 'bold'
+                        }}
+                        title="Swap Exercise"
+                      >
+                        <RefreshCw size={14} />
+                        Swap
+                      </button>
+                    </div>
+
+                    {/* Set Logging Rows */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
+                      {ex.sets.map((set) => {
+                        const stats = getExerciseStats(ex.id);
+                        const hasLastLog = stats.last;
+                        const prWeight = stats.pr?.weight;
+                        const prReps = stats.pr?.reps;
+
+                        return (
+                          <div
+                            key={set.setNum}
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                              backgroundColor: 'var(--shark-700)',
+                              borderRadius: '8px',
+                              padding: '8px 12px',
+                              border: set.completed ? '1px solid var(--ios-green)' : '1px solid var(--glass-border)'
+                            }}
+                          >
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                              <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--shark-300)' }}>
+                                Set {set.setNum}
+                              </span>
+                              
+                              {/* Logging Inputs */}
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                  <input
+                                    type="number"
+                                    pattern="[0-9]*"
+                                    placeholder="lbs"
+                                    value={set.weight}
+                                    onChange={(e) => handleSetChange(ex.id, set.setNum, 'weight', e.target.value)}
+                                    disabled={set.completed}
+                                    style={{
+                                      width: '56px',
+                                      textAlign: 'center',
+                                      backgroundColor: 'var(--shark-800)',
+                                      border: '1px solid var(--glass-border)',
+                                      borderRadius: '6px',
+                                      color: 'var(--shark-100)',
+                                      padding: '5px 0',
+                                      fontSize: '14px',
+                                      outline: 'none'
+                                    }}
+                                  />
+                                  <span style={{ fontSize: '11px', color: 'var(--shark-500)' }}>lbs</span>
+                                </div>
+
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                  <input
+                                    type="number"
+                                    pattern="[0-9]*"
+                                    placeholder="reps"
+                                    value={set.reps}
+                                    onChange={(e) => handleSetChange(ex.id, set.setNum, 'reps', e.target.value)}
+                                    disabled={set.completed}
+                                    style={{
+                                      width: '44px',
+                                      textAlign: 'center',
+                                      backgroundColor: 'var(--shark-800)',
+                                      border: '1px solid var(--glass-border)',
+                                      borderRadius: '6px',
+                                      color: 'var(--shark-100)',
+                                      padding: '5px 0',
+                                      fontSize: '14px',
+                                      outline: 'none'
+                                    }}
+                                  />
+                                  <span style={{ fontSize: '11px', color: 'var(--shark-500)' }}>reps</span>
+                                </div>
+
+                                {/* Check Button */}
+                                <button
+                                  onClick={() => toggleSetComplete(ex.id, set.setNum)}
+                                  style={{
+                                    width: '28px',
+                                    height: '28px',
+                                    borderRadius: '6px',
+                                    border: 'none',
+                                    backgroundColor: set.completed ? 'var(--ios-green)' : 'var(--shark-800)',
+                                    color: '#ffffff',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    transition: 'background-color 0.15s ease'
+                                  }}
+                                >
+                                  <Check size={16} strokeWidth={3} />
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Previous/PR Stats guidance guide line */}
+                            {(hasLastLog || prWeight) && (
+                              <div style={{
+                                display: 'flex',
+                                justifyContent: 'flex-start',
+                                gap: '12px',
+                                fontSize: '10px',
+                                color: 'var(--shark-500)',
+                                marginTop: '4px',
+                                borderTop: '1px solid rgba(255,255,255,0.03)',
+                                paddingTop: '4px'
+                              }}>
+                                {hasLastLog && (
+                                  <span>
+                                    Last: <span style={{ color: 'var(--shark-300)' }}>{stats.last.sets.split(', ')[set.setNum - 1] || stats.last.sets.split(', ')[0]}</span>
+                                  </span>
+                                )}
+                                {prWeight && (
+                                  <span style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                                    <span style={{ color: 'var(--gym-gold)' }}>🏆</span> PR: <span style={{ color: 'var(--gym-gold)', fontWeight: 'bold' }}>{prWeight} lbs x {prReps}</span>
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Save & Next Accordion Control */}
+                    <button
+                      onClick={() => handleSaveAndNext(ex)}
+                      className="ios-btn"
+                      style={{
+                        padding: '10px 14px',
+                        fontSize: '13px',
+                        backgroundColor: isExCompleted ? 'var(--shark-700)' : 'var(--ios-green)',
+                        color: '#ffffff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        boxShadow: isExCompleted ? 'none' : '0 2px 10px rgba(52, 199, 89, 0.2)'
+                      }}
+                    >
+                      <Check size={14} />
+                      {isExCompleted ? "Done (Collapse)" : "Save & Next Exercise"}
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })
+        )}
 
         {/* Finish Button */}
         <button
@@ -460,46 +777,106 @@ export default function TodayWorkout({ store }) {
     );
   }
 
-  // Completed State View
-  if (todayWorkout && todayWorkout.completed) {
-    return (
-      <div className="scrollable" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80%' }}>
-        <div style={{
-          backgroundColor: 'var(--gym-gold-dim)',
-          border: '1px solid rgba(255,204,0,0.3)',
-          padding: '20px',
-          borderRadius: '50%',
-          marginBottom: '20px'
-        }}>
-          <Trophy size={48} color="var(--gym-gold)" />
-        </div>
-        <h2 style={{ textAlign: 'center', marginBottom: '8px' }}>Workout Completed!</h2>
-        <p style={{ textAlign: 'center', marginBottom: '24px', maxWidth: '300px' }}>
-          Awesome job! Today's session has been successfully logged to your history.
-        </p>
-        <div style={{ textAlign: 'center', color: 'var(--shark-500)', fontSize: '12px' }}>
-          Check out your stats or download the CSV inside the **Stats** tab.
-        </div>
-      </div>
-    );
-  }
-
   // Standard Plan Target View (Not Started)
   return (
     <div className="scrollable">
       {/* Top Welcome Title */}
-      <div style={{ marginBottom: '24px' }}>
+      <div style={{ marginBottom: '20px' }}>
         <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--gym-red)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-          {todayName}
+          {selectedDayIndex === todayIndex ? todayName : weekdays[selectedDayIndex]}
         </span>
-        <h1 style={{ marginTop: '2px' }}>Today's Workout</h1>
-        <p>Stay active, stay fit. Keep up the consistency!</p>
+        <h1 style={{ marginTop: '2px' }}>
+          {selectedDayIndex === todayIndex ? "Today's Workout" : "Workout Preview"}
+        </h1>
+        <p style={{ fontSize: '13px', color: 'var(--shark-500)' }}>
+          {selectedDayIndex === todayIndex 
+            ? "Stay active, stay fit. Keep up the consistency!" 
+            : `Previewing schedule for ${weekdays[selectedDayIndex]}.`}
+        </p>
+      </div>
+
+      {/* Calendar Week Selector Strip */}
+      <div className="calendar-strip">
+        {currentPlan.map((day, idx) => {
+          const isSelected = selectedDayIndex === idx;
+          const isRealToday = todayIndex === idx;
+          
+          let statusIcon = '💪';
+          if (day.completed) {
+            statusIcon = '🏆';
+          } else if (day.type === 'rest') {
+            statusIcon = '💤';
+          } else if (day.type === 'run') {
+            statusIcon = '🏃‍♂️';
+          }
+
+          const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+          const dayLabel = dayLabels[idx];
+
+          return (
+            <button
+              key={idx}
+              onClick={() => setSelectedDayIndex(idx)}
+              className={`calendar-day-btn ${isSelected ? 'selected' : ''}`}
+            >
+              <span style={{
+                fontSize: '10px',
+                fontWeight: '700',
+                textTransform: 'uppercase',
+                color: isSelected ? 'rgba(255,255,255,0.8)' : 'var(--shark-400)',
+                marginBottom: '4px',
+                letterSpacing: '0.5px'
+              }}>
+                {dayLabel}
+              </span>
+              
+              <span style={{
+                fontSize: '16px',
+                lineHeight: '1',
+                marginBottom: isRealToday ? '2px' : '0'
+              }}>
+                {statusIcon}
+              </span>
+
+              {isRealToday && (
+                <div style={{
+                  width: '4px',
+                  height: '4px',
+                  borderRadius: '50%',
+                  backgroundColor: isSelected ? '#ffffff' : 'var(--gym-red)',
+                  marginTop: '2px'
+                }} />
+              )}
+            </button>
+          );
+        })}
       </div>
 
       {/* Today's Target Card */}
       {todayWorkout ? (
         <div>
-          {todayWorkout.type === 'rest' ? (
+          {todayWorkout.completed ? (
+            /* Completed Workout Card */
+            <div className="ios-card" style={{ padding: '32px 16px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 0 16px 0' }}>
+              <div style={{
+                backgroundColor: 'var(--gym-gold-dim)',
+                border: '1px solid rgba(255,204,0,0.3)',
+                padding: '20px',
+                borderRadius: '50%',
+                marginBottom: '20px'
+              }}>
+                <Trophy size={48} color="var(--gym-gold)" />
+              </div>
+              <h2 style={{ textAlign: 'center', marginBottom: '8px' }}>Workout Completed!</h2>
+              <p style={{ textAlign: 'center', marginBottom: '20px', maxWidth: '280px' }}>
+                Awesome job! This session has been successfully logged to your history.
+              </p>
+              <div style={{ textAlign: 'center', color: 'var(--shark-500)', fontSize: '12px' }}>
+                Check out your stats or download the CSV inside the **Stats** tab.
+              </div>
+            </div>
+          ) : todayWorkout.type === 'rest' ? (
+
             /* Rest Day Card */
             <div className="ios-card" style={{ padding: '32px 16px', textAlign: 'center' }}>
               <h2 style={{ color: 'var(--gym-gold)', marginBottom: '8px' }}>💤 {todayWorkout.title}</h2>
@@ -543,33 +920,54 @@ export default function TodayWorkout({ store }) {
               </div>
 
               {/* List of exercises included today (Preview) */}
-              <div>
-                <h3 style={{ marginBottom: '8px' }}>Exercise Lineup</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {todayWorkout.exercises.map((ex) => (
-                    <div
-                      key={ex.id}
-                      style={{
-                        backgroundColor: 'var(--shark-800)',
-                        border: '1px solid var(--glass-border)',
-                        borderRadius: '8px',
-                        padding: '12px 14px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                      }}
-                    >
-                      <div>
-                        <div style={{ fontWeight: '600', fontSize: '14px' }}>{ex.name}</div>
-                        <span style={{ fontSize: '11px', color: 'var(--shark-500)' }}>
-                          {ex.defaultSets} Sets x {ex.defaultReps} {ex.region === 'running' ? 'mins' : 'reps'}
-                        </span>
-                      </div>
-                      <span className="badge badge-red" style={{ fontSize: '9px' }}>{ex.region}</span>
-                    </div>
-                  ))}
+              {todayWorkout.type === 'run' ? (
+                <div className="ios-card" style={{ padding: '16px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <div style={{
+                    backgroundColor: 'var(--gym-red-dim)',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '20px'
+                  }}>
+                    🏃‍♂️
+                  </div>
+                  <div>
+                    <h4 style={{ fontSize: '14px', marginBottom: '2px', fontWeight: 'bold', textTransform: 'none' }}>Interactive Cardio Tracker</h4>
+                    <p style={{ fontSize: '12px', color: 'var(--shark-500)' }}>Log your activity type, duration, distance, and performance details.</p>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <h3 style={{ marginBottom: '8px' }}>Exercise Lineup</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {todayWorkout.exercises.map((ex) => (
+                      <div
+                        key={ex.id}
+                        style={{
+                          backgroundColor: 'var(--shark-800)',
+                          border: '1px solid var(--glass-border)',
+                          borderRadius: '8px',
+                          padding: '12px 14px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center'
+                        }}
+                      >
+                        <div>
+                          <div style={{ fontWeight: '600', fontSize: '14px' }}>{ex.name}</div>
+                          <span style={{ fontSize: '11px', color: 'var(--shark-500)' }}>
+                            {ex.defaultSets} Sets x {ex.defaultReps} {ex.region === 'running' ? 'mins' : 'reps'}
+                          </span>
+                        </div>
+                        <span className="badge badge-red" style={{ fontSize: '9px' }}>{ex.region}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

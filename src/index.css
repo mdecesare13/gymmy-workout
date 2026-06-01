@@ -365,3 +365,48 @@ p {
 .ios-input:focus {
   border-color: var(--gym-red);
 }
+
+/* Calendar selector strip and daily buttons */
+.calendar-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 4px 0;
+}
+
+.calendar-day-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 40px;
+  height: 64px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background-color: var(--shark-800);
+  color: var(--shark-300);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 6px 2px;
+  position: relative;
+}
+
+.calendar-day-btn:active {
+  transform: scale(0.95);
+}
+
+.calendar-day-btn.selected {
+  border-color: var(--gym-red);
+  background-color: var(--gym-red);
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.25);
+}
+
+.calendar-day-btn.selected:active {
+  transform: scale(0.98);
+}
+

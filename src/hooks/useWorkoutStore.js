@@ -32,7 +32,13 @@ export function useWorkoutStore() {
     return saved ? parseInt(saved, 10) : 0;
   });
 
+  const [activeSession, setActiveSession] = useState(() => {
+    const saved = localStorage.getItem('ironflow_active_session');
+    return saved ? JSON.parse(saved) : null;
+  });
+
   // --- Sync State to LocalStorage ---
+
   useEffect(() => {
     localStorage.setItem('ironflow_history', JSON.stringify(workoutHistory));
   }, [workoutHistory]);
@@ -52,6 +58,15 @@ export function useWorkoutStore() {
   useEffect(() => {
     localStorage.setItem('ironflow_region_rotation', regionRotationOffset.toString());
   }, [regionRotationOffset]);
+
+  useEffect(() => {
+    if (activeSession === null) {
+      localStorage.removeItem('ironflow_active_session');
+    } else {
+      localStorage.setItem('ironflow_active_session', JSON.stringify(activeSession));
+    }
+  }, [activeSession]);
+
 
   // --- Helper: Get Past Performance for an Exercise ---
   const getExerciseStats = (exerciseId) => {
@@ -230,15 +245,24 @@ export function useWorkoutStore() {
           completed: false
         };
       } else if (type === 'run') {
-        const runWorkout = selectRunWorkout(runDayCounter);
         runDayCounter++;
         return {
           dayIndex: index,
           dayName,
           type: 'run',
-          title: runWorkout.name,
-          description: runWorkout.description,
-          exercises: [runWorkout],
+          title: 'Cardio - Run/Bike',
+          description: 'Custom cardio session: input activity, duration, and details.',
+          exercises: [{
+            id: 'cardio_session',
+            name: 'Cardio - Run/Bike',
+            region: 'running',
+            category: 'cardio',
+            visualKey: 'run',
+            defaultSets: 1,
+            defaultReps: 30,
+            description: 'Run, cycle, or other aerobic exercises.',
+            instructions: ['Warm up for 5 mins.', 'Perform activity at desired pace.', 'Log your details.']
+          }],
           completed: false
         };
       } else {
@@ -330,6 +354,37 @@ export function useWorkoutStore() {
     }
   };
 
+  // --- Complete Cardio Logger ---
+  const logCardioSession = (dayIndex, cardioType, duration, distance, notes) => {
+    const todayStr = new Date().toLocaleDateString('en-CA');
+    
+    const cardioLog = {
+      date: todayStr,
+      exerciseId: 'cardio_session',
+      exerciseName: `Cardio (${cardioType})`,
+      region: 'running',
+      isCardio: true,
+      cardioType,
+      duration: Number(duration) || 0,
+      distance: Number(distance) || 0,
+      notes: notes || "",
+      sets: []
+    };
+
+    setWorkoutHistory(prev => [...prev, cardioLog]);
+
+    // Mark today's workout as completed in the active plan
+    if (currentPlan) {
+      const updatedPlan = currentPlan.map((day, idx) => {
+        if (idx === dayIndex) {
+          return { ...day, completed: true };
+        }
+        return day;
+      });
+      setCurrentPlan(updatedPlan);
+    }
+  };
+
   // --- CSV Exporter (RFC 4180 Standard) ---
   const exportHistoryCSV = () => {
     if (workoutHistory.length === 0) {
@@ -337,24 +392,44 @@ export function useWorkoutStore() {
       return;
     }
 
-    const headers = ['Date', 'Exercise Name', 'Region', 'Set Number', 'Weight (lbs)', 'Reps Completed'];
+    const headers = ['Date', 'Exercise Name', 'Region', 'Set Number', 'Weight (lbs)', 'Reps Completed', 'Cardio Type', 'Duration (mins)', 'Distance (miles)', 'Notes'];
     const rows = [];
 
     workoutHistory.forEach(log => {
-      log.sets.forEach(set => {
-        if (set.completed) {
-          // Quote strings to prevent comma breaking
-          const safeName = `"${log.exerciseName.replace(/"/g, '""')}"`;
-          rows.push([
-            log.date,
-            safeName,
-            log.region,
-            set.setNum,
-            set.weight,
-            set.reps
-          ].join(','));
-        }
-      });
+      if (log.isCardio) {
+        const safeName = `"${log.exerciseName.replace(/"/g, '""')}"`;
+        const safeNotes = `"${(log.notes || '').replace(/"/g, '""')}"`;
+        rows.push([
+          log.date,
+          safeName,
+          log.region,
+          1,
+          '',
+          '',
+          log.cardioType,
+          log.duration,
+          log.distance,
+          safeNotes
+        ].join(','));
+      } else {
+        log.sets.forEach(set => {
+          if (set.completed) {
+            const safeName = `"${log.exerciseName.replace(/"/g, '""')}"`;
+            rows.push([
+              log.date,
+              safeName,
+              log.region,
+              set.setNum,
+              set.weight,
+              set.reps,
+              '',
+              '',
+              '',
+              ''
+            ].join(','));
+          }
+        });
+      }
     });
 
     const csvContent = [headers.join(','), ...rows].join('\n');
@@ -381,6 +456,12 @@ export function useWorkoutStore() {
       const setIdx = headers.indexOf('set number');
       const weightIdx = headers.indexOf('weight (lbs)');
       const repsIdx = headers.indexOf('reps completed');
+      
+      // Cardio indexes
+      const cardioTypeIdx = headers.indexOf('cardio type');
+      const durationIdx = headers.indexOf('duration (mins)');
+      const distanceIdx = headers.indexOf('distance (miles)');
+      const notesIdx = headers.indexOf('notes');
 
       if (dateIdx === -1 || nameIdx === -1 || setIdx === -1 || weightIdx === -1 || repsIdx === -1) {
         return { success: false, message: "Invalid CSV headers. Must match exported headers." };
@@ -411,32 +492,56 @@ export function useWorkoutStore() {
         const date = cols[dateIdx];
         const exerciseName = cols[nameIdx].replace(/^"|"$/g, '');
         const region = regionIdx !== -1 ? cols[regionIdx] : 'chest';
-        const setNum = parseInt(cols[setIdx], 10);
-        const weight = parseFloat(cols[weightIdx]);
-        const reps = parseInt(cols[repsIdx], 10);
+        
+        const isCardio = cardioTypeIdx !== -1 && cols[cardioTypeIdx] !== '';
 
-        if (isNaN(setNum) || isNaN(weight) || isNaN(reps)) continue;
+        if (isCardio) {
+          const cardioType = cols[cardioTypeIdx];
+          const duration = parseFloat(cols[durationIdx]) || 0;
+          const distance = parseFloat(cols[distanceIdx]) || 0;
+          const notes = notesIdx !== -1 ? cols[notesIdx].replace(/^"|"$/g, '') : '';
 
-        const matchedEx = exercisesData.find(ex => ex.name.toLowerCase() === exerciseName.toLowerCase());
-        const exerciseId = matchedEx ? matchedEx.id : exerciseName.toLowerCase().replace(/[^a-z0-9]+/g, '_');
-
-        const key = `${date}_${exerciseId}`;
-        if (!tempHistory[key]) {
+          const key = `${date}_cardio_${cardioType.toLowerCase().replace(/[^a-z0-9]+/g, '_')}`;
           tempHistory[key] = {
             date,
-            exerciseId,
+            exerciseId: 'cardio_session',
             exerciseName,
             region,
+            isCardio: true,
+            cardioType,
+            duration,
+            distance,
+            notes,
             sets: []
           };
-        }
+        } else {
+          const setNum = parseInt(cols[setIdx], 10);
+          const weight = parseFloat(cols[weightIdx]);
+          const reps = parseInt(cols[repsIdx], 10);
 
-        tempHistory[key].sets.push({
-          setNum,
-          weight,
-          reps,
-          completed: true
-        });
+          if (isNaN(setNum) || isNaN(weight) || isNaN(reps)) continue;
+
+          const matchedEx = exercisesData.find(ex => ex.name.toLowerCase() === exerciseName.toLowerCase());
+          const exerciseId = matchedEx ? matchedEx.id : exerciseName.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+
+          const key = `${date}_${exerciseId}`;
+          if (!tempHistory[key]) {
+            tempHistory[key] = {
+              date,
+              exerciseId,
+              exerciseName,
+              region,
+              sets: []
+            };
+          }
+
+          tempHistory[key].sets.push({
+            setNum,
+            weight,
+            reps,
+            completed: true
+          });
+        }
       }
 
       const parsedLogs = Object.values(tempHistory);
@@ -447,7 +552,14 @@ export function useWorkoutStore() {
       setWorkoutHistory(prev => {
         const merged = [...prev];
         parsedLogs.forEach(newLog => {
-          const dupIdx = merged.findIndex(existing => existing.date === newLog.date && existing.exerciseId === newLog.exerciseId);
+          // Unique keys for merging logs cleanly
+          const dupIdx = merged.findIndex(existing => {
+            if (existing.date !== newLog.date) return false;
+            if (existing.isCardio && newLog.isCardio) {
+              return existing.cardioType === newLog.cardioType;
+            }
+            return existing.exerciseId === newLog.exerciseId;
+          });
           if (dupIdx !== -1) {
             merged[dupIdx] = newLog;
           } else {
@@ -507,9 +619,12 @@ export function useWorkoutStore() {
     getSwapAlternatives,
     swapExercise,
     logWorkoutSession,
+    logCardioSession,
     getExerciseStats,
     exportHistoryCSV,
     importHistoryCSV,
-    swapDays
+    swapDays,
+    activeSession,
+    setActiveSession
   };
 }

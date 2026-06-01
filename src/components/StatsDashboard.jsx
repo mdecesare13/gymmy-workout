@@ -174,28 +174,82 @@ export default function StatsDashboard({ store }) {
                         padding: '12px 14px'
                       }}
                     >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                        <span style={{ fontWeight: '600', fontSize: '14px' }}>{log.exerciseName}</span>
-                        <span className="badge badge-red" style={{ fontSize: '9px' }}>{log.region}</span>
-                      </div>
-                      
-                      {/* Sets list */}
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                        {log.sets.map((set, sIdx) => (
-                          <div
-                            key={sIdx}
-                            style={{
-                              backgroundColor: 'var(--shark-700)',
-                              fontSize: '12px',
-                              padding: '4px 8px',
-                              borderRadius: '6px',
-                              border: '1px solid var(--glass-border)'
-                            }}
-                          >
-                            Set {set.setNum}: <strong style={{ color: 'var(--shark-100)' }}>{set.weight} lbs</strong> x {set.reps}
+                      {log.isCardio ? (
+                        <>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                            <span style={{ fontWeight: '600', fontSize: '14px' }}>{log.exerciseName}</span>
+                            <span className="badge badge-gold" style={{ fontSize: '9px' }}>{log.cardioType || 'Cardio'}</span>
                           </div>
-                        ))}
-                      </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                              {log.duration > 0 && (
+                                <div
+                                  style={{
+                                    backgroundColor: 'var(--shark-700)',
+                                    fontSize: '12px',
+                                    padding: '4px 8px',
+                                    borderRadius: '6px',
+                                    border: '1px solid var(--glass-border)'
+                                  }}
+                                >
+                                  🕒 <strong style={{ color: 'var(--shark-100)' }}>{log.duration} mins</strong>
+                                </div>
+                              )}
+                              {log.distance > 0 && (
+                                <div
+                                  style={{
+                                    backgroundColor: 'var(--shark-700)',
+                                    fontSize: '12px',
+                                    padding: '4px 8px',
+                                    borderRadius: '6px',
+                                    border: '1px solid var(--glass-border)'
+                                  }}
+                                >
+                                  📍 <strong style={{ color: 'var(--shark-100)' }}>{log.distance} miles</strong>
+                                </div>
+                              )}
+                            </div>
+                            {log.notes && (
+                              <div style={{
+                                fontSize: '12px',
+                                color: 'var(--shark-400)',
+                                backgroundColor: 'rgba(0,0,0,0.2)',
+                                padding: '6px 10px',
+                                borderRadius: '6px',
+                                borderLeft: '2px solid var(--gym-gold)',
+                                marginTop: '2px'
+                              }}>
+                                {log.notes}
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                            <span style={{ fontWeight: '600', fontSize: '14px' }}>{log.exerciseName}</span>
+                            <span className="badge badge-red" style={{ fontSize: '9px' }}>{log.region}</span>
+                          </div>
+                          
+                          {/* Sets list */}
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {log.sets.map((set, sIdx) => (
+                              <div
+                                key={sIdx}
+                                style={{
+                                  backgroundColor: 'var(--shark-700)',
+                                  fontSize: '12px',
+                                  padding: '4px 8px',
+                                  borderRadius: '6px',
+                                  border: '1px solid var(--glass-border)'
+                                }}
+                              >
+                                Set {set.setNum}: <strong style={{ color: 'var(--shark-100)' }}>{set.weight} lbs</strong> x {set.reps}
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
                     </div>
                   ))}
                 </div>
