@@ -10,11 +10,13 @@ export function useWorkoutStore() {
 
   const [planConfig, setPlanConfig] = useState(() => {
     const saved = localStorage.getItem('ironflow_config');
-    return saved ? JSON.parse(saved) : {
+    const defaults = {
       liftDays: 4,
       runDays: 2,
-      focusRegions: ['chest', 'back', 'bis', 'tris', 'shoulders', 'legs', 'abs']
+      focusRegions: ['chest', 'back', 'bis', 'tris', 'shoulders', 'legs', 'abs'],
+      defaultLiftDuration: 45
     };
+    return saved ? { ...defaults, ...JSON.parse(saved) } : defaults;
   });
 
   const [currentPlan, setCurrentPlan] = useState(() => {
@@ -105,9 +107,22 @@ export function useWorkoutStore() {
     };
   };
 
+  // --- Plan Generator Duration-to-Exercise Config Mapping ---
+  const durationToExerciseConfig = (duration) => {
+    switch (duration) {
+      case 15: return { exercises: 2, sets: 3 };
+      case 30: return { exercises: 4, sets: 3 };
+      case 45: return { exercises: 5, sets: null }; // use defaultSets
+      case 60: return { exercises: 6, sets: null };
+      case 75: return { exercises: 8, sets: null };
+      case 90: return { exercises: 10, sets: null };
+      default: return { exercises: 5, sets: null };
+    }
+  };
+
   // --- Plan Generator Logic ---
   const generateWeeklyPlan = () => {
-    const { liftDays, runDays, focusRegions } = planConfig;
+    const { liftDays, runDays, focusRegions, defaultLiftDuration } = planConfig;
     
     // 1. Cap days to fit 7-day week
     const totalActiveDays = liftDays + runDays;
@@ -149,11 +164,18 @@ export function useWorkoutStore() {
 
     // 3. Select Exercises (filtering out recently used to prevent fatigue)
     const newRecentlyUsed = [];
-    const selectExercisesForDay = (regions) => {
+    const selectExercisesForDay = (regions, durationMins) => {
       let dayExercises = [];
-      const exercisesPerRegion = regions.length === 1 ? 5 : 3; // 5 if single region, 3 each if paired
+      const config = durationToExerciseConfig(durationMins);
+      const totalExercisesToSelect = config.exercises;
+      
+      const baseCount = Math.floor(totalExercisesToSelect / regions.length);
+      const remainder = totalExercisesToSelect % regions.length;
 
-      regions.forEach(region => {
+      regions.forEach((region, rIdx) => {
+        const exercisesPerRegion = baseCount + (rIdx < remainder ? 1 : 0);
+        if (exercisesPerRegion <= 0) return;
+
         // Find all matching exercises in database
         const pool = exercisesData.filter(ex => ex.region === region);
         if (pool.length === 0) return;
@@ -175,9 +197,10 @@ export function useWorkoutStore() {
         }
 
         selected.forEach(ex => {
+          const setsCount = config.sets || ex.defaultSets || 3;
           dayExercises.push({
             ...ex,
-            sets: Array.from({ length: ex.defaultSets }, (_, i) => ({
+            sets: Array.from({ length: setsCount }, (_, i) => ({
               setNum: i + 1,
               weight: '',
               reps: ex.defaultReps,
@@ -233,7 +256,8 @@ export function useWorkoutStore() {
 
       if (type === 'lift') {
         const regions = dailyRegions[liftDayCounter] || [];
-        const exercises = selectExercisesForDay(regions);
+        const duration = defaultLiftDuration || 45;
+        const exercises = selectExercisesForDay(regions, duration);
         liftDayCounter++;
         return {
           dayIndex: index,
@@ -242,10 +266,12 @@ export function useWorkoutStore() {
           title: regions.map(r => r.toUpperCase()).join(' & '),
           regions,
           exercises,
+          duration,
           completed: false
         };
       } else if (type === 'run') {
         runDayCounter++;
+        const duration = 30;
         return {
           dayIndex: index,
           dayName,
@@ -259,10 +285,11 @@ export function useWorkoutStore() {
             category: 'cardio',
             visualKey: 'run',
             defaultSets: 1,
-            defaultReps: 30,
+            defaultReps: duration,
             description: 'Run, cycle, or other aerobic exercises.',
             instructions: ['Warm up for 5 mins.', 'Perform activity at desired pace.', 'Log your details.']
           }],
+          duration,
           completed: false
         };
       } else {
@@ -273,6 +300,7 @@ export function useWorkoutStore() {
           title: 'Rest Day',
           description: 'Focus on stretching, hydration, and active recovery.',
           exercises: [],
+          duration: 0,
           completed: false
         };
       }
@@ -284,6 +312,139 @@ export function useWorkoutStore() {
     if (sortedFocusRegions.length > 0) {
       setRegionRotationOffset((prev) => (prev + maxRegionsThisWeek) % sortedFocusRegions.length);
     }
+  };
+
+  // --- Change Specific Day Workout Duration (Resizing exercise list) ---
+  const changeDayDuration = (dayIndex, direction) => {
+    if (!currentPlan) return;
+
+    const durationsList = [15, 30, 45, 60, 75, 90];
+
+    const updatedPlan = currentPlan.map((day, idx) => {
+      if (idx !== dayIndex) return day;
+
+      const currentDur = day.duration || (day.type === 'run' ? 30 : 45);
+      let newDur = currentDur;
+      const curIdx = durationsList.indexOf(currentDur);
+
+      if (direction === 'increase') {
+        if (curIdx < durationsList.length - 1) {
+          newDur = durationsList[curIdx + 1];
+        }
+      } else {
+        if (curIdx > 0) {
+          newDur = durationsList[curIdx - 1];
+        }
+      }
+
+      if (newDur === currentDur) return day; // no change
+
+      if (day.type === 'run') {
+        // Update cardio time
+        const updatedExercises = day.exercises.map(ex => {
+          if (ex.id === 'cardio_session') {
+            return {
+              ...ex,
+              defaultReps: newDur,
+              sets: [{ ...ex.sets[0], reps: newDur }]
+            };
+          }
+          return ex;
+        });
+
+        return {
+          ...day,
+          duration: newDur,
+          exercises: updatedExercises
+        };
+      } else if (day.type === 'lift') {
+        // Update lift exercises count and sets
+        const config = durationToExerciseConfig(newDur);
+        const targetCount = config.exercises;
+        const setsCount = config.sets; // if null, use defaultSets
+
+        let updatedExercises = [...day.exercises];
+        if (updatedExercises.length > targetCount) {
+          // Slice exercises to target count
+          updatedExercises = updatedExercises.slice(0, targetCount);
+        } else if (updatedExercises.length < targetCount) {
+          // Add new exercises
+          const needed = targetCount - updatedExercises.length;
+          
+          // Determine muscle regions for this day
+          const regions = day.regions || [];
+          if (regions.length > 0) {
+            // Find exercises in these regions that aren't already included
+            const existingIds = updatedExercises.map(ex => ex.id);
+            const pool = exercisesData.filter(ex => regions.includes(ex.region) && !existingIds.includes(ex.id));
+            
+            // Shuffle pool
+            const shuffledPool = [...pool].sort(() => Math.random() - 0.5);
+            const selected = shuffledPool.slice(0, needed);
+            
+            selected.forEach(ex => {
+              const targetSets = setsCount || ex.defaultSets || 3;
+              updatedExercises.push({
+                ...ex,
+                sets: Array.from({ length: targetSets }, (_, i) => ({
+                  setNum: i + 1,
+                  weight: '',
+                  reps: ex.defaultReps,
+                  completed: false
+                }))
+              });
+            });
+          }
+        }
+
+        // Adjust sets count for ALL exercises to match the new duration's target set count (e.g. 3 sets for 30m/15m)
+        if (setsCount !== null) {
+          updatedExercises = updatedExercises.map(ex => {
+            if (ex.sets.length === setsCount) return ex;
+            return {
+              ...ex,
+              sets: Array.from({ length: setsCount }, (_, i) => {
+                const existingSet = ex.sets[i];
+                return {
+                  setNum: i + 1,
+                  weight: existingSet ? existingSet.weight : '',
+                  reps: existingSet ? existingSet.reps : ex.defaultReps,
+                  completed: existingSet ? existingSet.completed : false
+                };
+              })
+            };
+          });
+        } else {
+          // Restore to exercise's default sets if duration is 45m or higher and sets were previously scaled to 3
+          updatedExercises = updatedExercises.map(ex => {
+            const targetSets = ex.defaultSets || 4;
+            if (ex.sets.length === targetSets) return ex;
+            return {
+              ...ex,
+              sets: Array.from({ length: targetSets }, (_, i) => {
+                const existingSet = ex.sets[i];
+                return {
+                  setNum: i + 1,
+                  weight: existingSet ? existingSet.weight : '',
+                  reps: existingSet ? existingSet.reps : ex.defaultReps,
+                  completed: existingSet ? existingSet.completed : false
+                };
+              })
+            };
+          });
+        }
+
+        return {
+          ...day,
+          duration: newDur,
+          exercises: updatedExercises
+        };
+      }
+
+      return day;
+    });
+
+    setCurrentPlan(updatedPlan);
   };
 
   // --- Swap Exercise Option ---
@@ -625,6 +786,7 @@ export function useWorkoutStore() {
     importHistoryCSV,
     swapDays,
     activeSession,
-    setActiveSession
+    setActiveSession,
+    changeDayDuration
   };
 }

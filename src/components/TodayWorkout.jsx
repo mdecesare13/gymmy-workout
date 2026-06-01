@@ -959,7 +959,7 @@ export default function TodayWorkout({ store }) {
                         <div>
                           <div style={{ fontWeight: '600', fontSize: '14px' }}>{ex.name}</div>
                           <span style={{ fontSize: '11px', color: 'var(--shark-500)' }}>
-                            {ex.defaultSets} Sets x {ex.defaultReps} {ex.region === 'running' ? 'mins' : 'reps'}
+                            {ex.sets ? ex.sets.length : ex.defaultSets} Sets x {ex.defaultReps} {ex.region === 'running' ? 'mins' : 'reps'}
                           </span>
                         </div>
                         <span className="badge badge-red" style={{ fontSize: '9px' }}>{ex.region}</span>

@@ -115,6 +115,39 @@ export default function PlanBuilder({ store }) {
         </div>
       </div>
 
+      {/* Default Lift Duration Slider */}
+      <div className="ios-card" style={{ marginBottom: '16px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+          <span style={{ fontWeight: '600' }}>Default Lifting Duration</span>
+          <span style={{ color: 'var(--gym-red)', fontWeight: 'bold', fontSize: '16px' }}>
+            {planConfig.defaultLiftDuration || 45} mins
+          </span>
+        </div>
+        <input
+          type="range"
+          min="15"
+          max="90"
+          step="15"
+          value={planConfig.defaultLiftDuration || 45}
+          onChange={(e) => {
+            const val = parseInt(e.target.value, 10);
+            setPlanConfig((prev) => ({ ...prev, defaultLiftDuration: val }));
+          }}
+          style={{
+            width: '100%',
+            accentColor: 'var(--gym-red)',
+            cursor: 'pointer',
+            height: '6px',
+            borderRadius: '3px'
+          }}
+        />
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--shark-500)', marginTop: '4px' }}>
+          <span>15 mins (2 ex, 3 sets)</span>
+          <span>45m (5 ex)</span>
+          <span>90 mins (10 ex)</span>
+        </div>
+      </div>
+
       {/* Warning if exceeds 7 days */}
       {totalDays > 7 && (
         <div className="badge badge-red" style={{ display: 'flex', padding: '10px', borderRadius: '8px', marginBottom: '16px', fontSize: '12px' }}>
@@ -240,22 +273,65 @@ export default function PlanBuilder({ store }) {
               >
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', pointerEvents: 'none' }}>
                   <span style={{ fontSize: '11px', color: isSelected ? 'var(--gym-gold)' : 'var(--shark-500)', fontWeight: 'bold' }}>
-                    {day.dayName.toUpperCase()}
+                    {day.dayName.toUpperCase()} {day.duration > 0 && `• ${day.duration}m`}
                   </span>
                   <span style={{ fontSize: '15px', fontWeight: '600', color: 'var(--shark-100)' }}>
                     {day.title}
                   </span>
                 </div>
-                <div style={{ pointerEvents: 'none' }}>
-                  {day.type === 'lift' ? (
-                    <span className="badge badge-red">Lift</span>
-                  ) : day.type === 'run' ? (
-                    <span className="badge badge-gold">Run</span>
-                  ) : (
-                    <span className="badge" style={{ backgroundColor: 'var(--shark-700)', color: 'var(--shark-300)' }}>
-                      Rest
-                    </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  {day.type !== 'rest' && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', backgroundColor: 'var(--shark-700)', borderRadius: '6px', padding: '2px 4px' }}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          store.changeDayDuration(index, 'decrease');
+                        }}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: 'var(--shark-300)',
+                          cursor: 'pointer',
+                          fontWeight: 'bold',
+                          padding: '2px 8px',
+                          fontSize: '15px'
+                        }}
+                      >
+                        -
+                      </button>
+                      <span style={{ fontSize: '11px', color: 'var(--shark-300)', fontWeight: '700', minWidth: '28px', textAlign: 'center' }}>
+                        {day.duration}m
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          store.changeDayDuration(index, 'increase');
+                        }}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: 'var(--shark-300)',
+                          cursor: 'pointer',
+                          fontWeight: 'bold',
+                          padding: '2px 8px',
+                          fontSize: '15px'
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
                   )}
+                  <div>
+                    {day.type === 'lift' ? (
+                      <span className="badge badge-red">Lift</span>
+                    ) : day.type === 'run' ? (
+                      <span className="badge badge-gold">Run</span>
+                    ) : (
+                      <span className="badge" style={{ backgroundColor: 'var(--shark-700)', color: 'var(--shark-300)' }}>
+                        Rest
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             );
