@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Sliders, RefreshCw, Check } from 'lucide-react';
 
 export default function PlanBuilder({ store }) {
   const { planConfig, setPlanConfig, generateWeeklyPlan, currentPlan } = store;
+  const [selectedDayIdx, setSelectedDayIdx] = useState(null);
+  const [draggedDayIdx, setDraggedDayIdx] = useState(null);
 
   const regions = [
     { id: 'chest', label: 'Chest' },
@@ -174,45 +176,90 @@ export default function PlanBuilder({ store }) {
 
       {/* Current Generated Weekly Plan Preview */}
       {currentPlan && (
-        <div>
-          <h3 style={{ marginBottom: '12px', borderBottom: '1px solid var(--glass-border)', paddingBottom: '6px' }}>
+        <div style={{ marginBottom: '20px' }}>
+          <h3 style={{ marginBottom: '4px', borderBottom: '1px solid var(--glass-border)', paddingBottom: '6px' }}>
             Active Weekly Schedule
           </h3>
-          {currentPlan.map((day) => (
-            <div
-              key={day.dayName}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '12px 14px',
-                backgroundColor: 'var(--shark-800)',
-                borderBottom: '1px solid var(--glass-border)',
-                borderRadius: '8px',
-                marginBottom: '8px'
-              }}
-            >
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                <span style={{ fontSize: '11px', color: 'var(--shark-500)', fontWeight: 'bold' }}>
-                  {day.dayName.toUpperCase()}
-                </span>
-                <span style={{ fontSize: '15px', fontWeight: '600' }}>
-                  {day.title}
-                </span>
-              </div>
-              <div>
-                {day.type === 'lift' ? (
-                  <span className="badge badge-red">Lift</span>
-                ) : day.type === 'run' ? (
-                  <span className="badge badge-gold">Run</span>
-                ) : (
-                  <span className="badge" style={{ backgroundColor: 'var(--shark-700)', color: 'var(--shark-300)' }}>
-                    Rest
+          <p style={{ fontSize: '12px', color: 'var(--shark-500)', marginBottom: '12px' }}>
+            {selectedDayIdx !== null ? (
+              <strong style={{ color: 'var(--gym-gold)' }}>⚠️ Tap another day to swap workouts, or tap same day to cancel.</strong>
+            ) : (
+              "💡 Drag & drop rows, or tap any two days to swap their workouts."
+            )}
+          </p>
+          
+          {currentPlan.map((day, index) => {
+            const isSelected = selectedDayIdx === index;
+            const isDraggedOver = draggedDayIdx === index;
+
+            return (
+              <div
+                key={day.dayName}
+                draggable="true"
+                onDragStart={(e) => {
+                  setDraggedDayIdx(index);
+                  e.dataTransfer.setData('text/plain', index);
+                }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const sourceIdx = draggedDayIdx !== null ? draggedDayIdx : parseInt(e.dataTransfer.getData('text/plain'), 10);
+                  if (sourceIdx !== index && !isNaN(sourceIdx)) {
+                    store.swapDays(sourceIdx, index);
+                  }
+                  setDraggedDayIdx(null);
+                }}
+                onDragEnd={() => setDraggedDayIdx(null)}
+                onClick={() => {
+                  if (selectedDayIdx === null) {
+                    setSelectedDayIdx(index);
+                  } else if (selectedDayIdx === index) {
+                    setSelectedDayIdx(null);
+                  } else {
+                    store.swapDays(selectedDayIdx, index);
+                    setSelectedDayIdx(null);
+                  }
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '12px 14px',
+                  backgroundColor: isSelected ? 'rgba(255, 204, 0, 0.08)' : 'var(--shark-800)',
+                  border: isSelected ? '1.5px solid var(--gym-gold)' : '1px solid var(--glass-border)',
+                  boxShadow: isSelected ? '0 0 10px rgba(255, 204, 0, 0.15)' : 'none',
+                  borderRadius: '8px',
+                  marginBottom: '8px',
+                  cursor: 'grab',
+                  userSelect: 'none',
+                  transition: 'all 0.15s ease',
+                  opacity: isDraggedOver ? 0.5 : 1
+                }}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', pointerEvents: 'none' }}>
+                  <span style={{ fontSize: '11px', color: isSelected ? 'var(--gym-gold)' : 'var(--shark-500)', fontWeight: 'bold' }}>
+                    {day.dayName.toUpperCase()}
                   </span>
-                )}
+                  <span style={{ fontSize: '15px', fontWeight: '600', color: 'var(--shark-100)' }}>
+                    {day.title}
+                  </span>
+                </div>
+                <div style={{ pointerEvents: 'none' }}>
+                  {day.type === 'lift' ? (
+                    <span className="badge badge-red">Lift</span>
+                  ) : day.type === 'run' ? (
+                    <span className="badge badge-gold">Run</span>
+                  ) : (
+                    <span className="badge" style={{ backgroundColor: 'var(--shark-700)', color: 'var(--shark-300)' }}>
+                      Rest
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

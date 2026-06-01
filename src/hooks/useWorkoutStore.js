@@ -368,6 +368,39 @@ export function useWorkoutStore() {
     document.body.removeChild(link);
   };
 
+  // --- Swap Days Option ---
+  const swapDays = (idx1, idx2) => {
+    if (!currentPlan) return;
+    const updatedPlan = [...currentPlan];
+    
+    // Swap everything except dayIndex and dayName
+    const temp = {
+      type: updatedPlan[idx1].type,
+      title: updatedPlan[idx1].title,
+      regions: updatedPlan[idx1].regions,
+      exercises: updatedPlan[idx1].exercises,
+      description: updatedPlan[idx1].description,
+      completed: updatedPlan[idx1].completed
+    };
+
+    updatedPlan[idx1] = {
+      ...updatedPlan[idx1],
+      type: updatedPlan[idx2].type,
+      title: updatedPlan[idx2].title,
+      regions: updatedPlan[idx2].regions,
+      exercises: updatedPlan[idx2].exercises,
+      description: updatedPlan[idx2].description,
+      completed: updatedPlan[idx2].completed
+    };
+
+    updatedPlan[idx2] = {
+      ...updatedPlan[idx2],
+      ...temp
+    };
+
+    setCurrentPlan(updatedPlan);
+  };
+
   return {
     workoutHistory,
     planConfig,
@@ -379,6 +412,7 @@ export function useWorkoutStore() {
     swapExercise,
     logWorkoutSession,
     getExerciseStats,
-    exportHistoryCSV
+    exportHistoryCSV,
+    swapDays
   };
 }
