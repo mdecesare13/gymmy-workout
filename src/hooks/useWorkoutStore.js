@@ -368,6 +368,102 @@ export function useWorkoutStore() {
     document.body.removeChild(link);
   };
 
+  // --- CSV Importer ---
+  const importHistoryCSV = (csvText) => {
+    try {
+      const lines = csvText.split('\n').map(l => l.trim()).filter(Boolean);
+      if (lines.length <= 1) return { success: false, message: "CSV file is empty." };
+
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const dateIdx = headers.indexOf('date');
+      const nameIdx = headers.indexOf('exercise name');
+      const regionIdx = headers.indexOf('region');
+      const setIdx = headers.indexOf('set number');
+      const weightIdx = headers.indexOf('weight (lbs)');
+      const repsIdx = headers.indexOf('reps completed');
+
+      if (dateIdx === -1 || nameIdx === -1 || setIdx === -1 || weightIdx === -1 || repsIdx === -1) {
+        return { success: false, message: "Invalid CSV headers. Must match exported headers." };
+      }
+
+      const tempHistory = {};
+
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i];
+        let cols = [];
+        let inQuotes = false;
+        let currentCol = "";
+        for (let charIdx = 0; charIdx < line.length; charIdx++) {
+          const char = line[charIdx];
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === ',' && !inQuotes) {
+            cols.push(currentCol.trim());
+            currentCol = "";
+          } else {
+            currentCol += char;
+          }
+        }
+        cols.push(currentCol.trim());
+
+        if (cols.length < headers.length) continue;
+
+        const date = cols[dateIdx];
+        const exerciseName = cols[nameIdx].replace(/^"|"$/g, '');
+        const region = regionIdx !== -1 ? cols[regionIdx] : 'chest';
+        const setNum = parseInt(cols[setIdx], 10);
+        const weight = parseFloat(cols[weightIdx]);
+        const reps = parseInt(cols[repsIdx], 10);
+
+        if (isNaN(setNum) || isNaN(weight) || isNaN(reps)) continue;
+
+        const matchedEx = exercisesData.find(ex => ex.name.toLowerCase() === exerciseName.toLowerCase());
+        const exerciseId = matchedEx ? matchedEx.id : exerciseName.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+
+        const key = `${date}_${exerciseId}`;
+        if (!tempHistory[key]) {
+          tempHistory[key] = {
+            date,
+            exerciseId,
+            exerciseName,
+            region,
+            sets: []
+          };
+        }
+
+        tempHistory[key].sets.push({
+          setNum,
+          weight,
+          reps,
+          completed: true
+        });
+      }
+
+      const parsedLogs = Object.values(tempHistory);
+      if (parsedLogs.length === 0) {
+        return { success: false, message: "No valid logs parsed from CSV." };
+      }
+
+      setWorkoutHistory(prev => {
+        const merged = [...prev];
+        parsedLogs.forEach(newLog => {
+          const dupIdx = merged.findIndex(existing => existing.date === newLog.date && existing.exerciseId === newLog.exerciseId);
+          if (dupIdx !== -1) {
+            merged[dupIdx] = newLog;
+          } else {
+            merged.push(newLog);
+          }
+        });
+        return merged.sort((a, b) => new Date(a.date) - new Date(b.date));
+      });
+
+      return { success: true, message: `Successfully imported ${parsedLogs.length} logs!` };
+    } catch (err) {
+      console.error(err);
+      return { success: false, message: "Error parsing CSV file." };
+    }
+  };
+
   // --- Swap Days Option ---
   const swapDays = (idx1, idx2) => {
     if (!currentPlan) return;
@@ -413,6 +509,7 @@ export function useWorkoutStore() {
     logWorkoutSession,
     getExerciseStats,
     exportHistoryCSV,
+    importHistoryCSV,
     swapDays
   };
 }

@@ -1,8 +1,9 @@
-import React from 'react';
-import { Download, Calendar, Activity, BarChart2, Flame } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Download, Upload, Calendar, Activity, BarChart2, Flame } from 'lucide-react';
 
 export default function StatsDashboard({ store }) {
-  const { workoutHistory, exportHistoryCSV } = store;
+  const { workoutHistory, exportHistoryCSV, importHistoryCSV } = store;
+  const fileInputRef = useRef(null);
 
   // Compute stats
   const totalWorkouts = new Set(workoutHistory.map(log => log.date)).size;
@@ -25,6 +26,21 @@ export default function StatsDashboard({ store }) {
   // Sort dates descending
   const sortedDates = Object.keys(groupedHistory).sort((a, b) => new Date(b) - new Date(a));
 
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target.result;
+      const res = importHistoryCSV(text);
+      alert(res.message);
+      // Reset input value to allow uploading same file again
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="scrollable">
       <div style={{
@@ -33,32 +49,63 @@ export default function StatsDashboard({ store }) {
         alignItems: 'flex-start',
         marginBottom: '20px'
       }}>
-        <div>
+        <div style={{ marginRight: '10px' }}>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Activity color="var(--gym-red)" size={26} />
             Stats & History
           </h1>
-          <p>Review your training achievements and export logs.</p>
+          <p>Review your training achievements and manage logs.</p>
         </div>
-        <button
-          onClick={exportHistoryCSV}
-          className="ios-btn"
-          style={{
-            width: 'auto',
-            padding: '8px 12px',
-            fontSize: '13px',
-            backgroundColor: 'var(--gym-gold-dim)',
-            color: 'var(--gym-gold)',
-            border: '1px solid rgba(255, 204, 0, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            borderRadius: '8px'
-          }}
-        >
-          <Download size={14} />
-          CSV
-        </button>
+        <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
+          {/* Hidden file input */}
+          <input
+            type="file"
+            accept=".csv"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            style={{ display: 'none' }}
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="ios-btn"
+            style={{
+              width: 'auto',
+              padding: '8px 12px',
+              fontSize: '13px',
+              backgroundColor: 'var(--shark-800)',
+              color: 'var(--shark-100)',
+              border: '1px solid var(--glass-border)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              borderRadius: '8px'
+            }}
+            title="Import History from CSV"
+          >
+            <Upload size={14} />
+            Import
+          </button>
+          <button
+            onClick={exportHistoryCSV}
+            className="ios-btn"
+            style={{
+              width: 'auto',
+              padding: '8px 12px',
+              fontSize: '13px',
+              backgroundColor: 'var(--gym-gold-dim)',
+              color: 'var(--gym-gold)',
+              border: '1px solid rgba(255, 204, 0, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              borderRadius: '8px'
+            }}
+            title="Export History to CSV"
+          >
+            <Download size={14} />
+            Export
+          </button>
+        </div>
       </div>
 
       {/* Metrics Row */}
