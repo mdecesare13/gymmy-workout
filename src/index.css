@@ -66,7 +66,7 @@ input, textarea {
 }
 
 html {
-  height: 100%;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -77,13 +77,13 @@ body {
   overflow: hidden; /* Screen shifting handled within views */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
+  height: 100dvh;
 }
 
 #root {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100dvh;
   width: 100%;
   background-color: var(--shark-900);
   position: relative;
@@ -93,8 +93,7 @@ body {
 /* Force full viewport height when running as standalone PWA on Home Screen */
 @media (display-mode: standalone) {
   html, body, #root {
-    height: 100vh !important;
-    height: 100svh !important;
+    height: 100dvh !important;
   }
 }
 
@@ -102,7 +101,7 @@ body {
   #root {
     max-width: 480px;
     margin: 0 auto;
-    height: 100vh;
+    height: 100dvh;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
     border-left: 1px solid var(--glass-border);
     border-right: 1px solid var(--glass-border);
