@@ -67,7 +67,6 @@ input, textarea {
 
 html {
   height: 100%;
-  height: -webkit-fill-available;
   overflow: hidden;
 }
 
@@ -79,14 +78,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
-  height: -webkit-fill-available;
 }
 
 #root {
   display: flex;
   flex-direction: column;
   height: 100%;
-  height: -webkit-fill-available;
   width: 100%;
   background-color: var(--shark-900);
   position: relative;
