@@ -280,7 +280,7 @@ export default function PlanBuilder({ store }) {
                   </span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  {day.type !== 'rest' && (
+                  {day.type === 'lift' && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px', backgroundColor: 'var(--shark-700)', borderRadius: '6px', padding: '2px 4px' }}>
                       <button
                         onClick={(e) => {
