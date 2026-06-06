@@ -150,18 +150,33 @@ export default function TodayWorkout({ store }) {
   const toggleSetComplete = (exerciseId, setNum) => {
     if (!activeSession) return;
 
+    const stats = getExerciseStats(exerciseId);
+    const hasLastLog = stats.last;
+
     const updatedExercises = activeSession.exercises.map(ex => {
       if (ex.id !== exerciseId) return ex;
 
       const updatedSets = ex.sets.map(s => {
         if (s.setNum !== setNum) return s;
         
+        let placeholderWeight = 0;
+        let placeholderReps = ex.defaultReps || 10;
+        
+        if (hasLastLog) {
+          const setsArray = stats.last.sets.split(', ');
+          const currentSetString = setsArray[setNum - 1] || setsArray[0];
+          if (currentSetString) {
+            const match = currentSetString.match(/([\d.]+)\s*lbs\s*x\s*(\d+)/);
+            if (match) {
+              placeholderWeight = Number(match[1]) || 0;
+              placeholderReps = Number(match[2]) || placeholderReps;
+            }
+          }
+        }
+        
         // Auto-fill defaults if left blank when checking off
-        const defaultReps = s.reps || ex.defaultReps || 10;
-        // Search history or default to 0 for weight if blank
-        const lastWeightMatch = s.pr?.weight || 0;
-        const weight = s.weight !== '' ? s.weight : lastWeightMatch;
-        const reps = s.reps !== '' ? s.reps : defaultReps;
+        const weight = s.weight !== '' ? s.weight : (placeholderWeight || stats.pr?.weight || 0);
+        const reps = s.reps !== '' ? s.reps : placeholderReps;
 
         return { 
           ...s, 
@@ -231,6 +246,9 @@ export default function TodayWorkout({ store }) {
   const handleSaveAndNext = (exercise) => {
     if (!activeSession) return;
     
+    const stats = getExerciseStats(exercise.id);
+    const hasLastLog = stats.last;
+
     // 1. Mark all sets of this exercise as complete if they aren't already
     const updatedExercises = activeSession.exercises.map(ex => {
       if (ex.id !== exercise.id) return ex;
@@ -238,10 +256,23 @@ export default function TodayWorkout({ store }) {
       const updatedSets = ex.sets.map(s => {
         if (s.completed) return s;
         
-        const defaultReps = s.reps || ex.defaultReps || 10;
-        const lastWeightMatch = s.pr?.weight || 0;
-        const weight = s.weight !== '' ? s.weight : lastWeightMatch;
-        const reps = s.reps !== '' ? s.reps : defaultReps;
+        let placeholderWeight = 0;
+        let placeholderReps = ex.defaultReps || 10;
+        
+        if (hasLastLog) {
+          const setsArray = stats.last.sets.split(', ');
+          const currentSetString = setsArray[s.setNum - 1] || setsArray[0];
+          if (currentSetString) {
+            const match = currentSetString.match(/([\d.]+)\s*lbs\s*x\s*(\d+)/);
+            if (match) {
+              placeholderWeight = Number(match[1]) || 0;
+              placeholderReps = Number(match[2]) || placeholderReps;
+            }
+          }
+        }
+        
+        const weight = s.weight !== '' ? s.weight : (placeholderWeight || stats.pr?.weight || 0);
+        const reps = s.reps !== '' ? s.reps : placeholderReps;
 
         return { 
           ...s, 
@@ -583,6 +614,21 @@ export default function TodayWorkout({ store }) {
                         const prWeight = stats.pr?.weight;
                         const prReps = stats.pr?.reps;
 
+                        let placeholderWeight = "lbs";
+                        let placeholderReps = "reps";
+                        
+                        if (hasLastLog) {
+                          const setsArray = stats.last.sets.split(', ');
+                          const currentSetString = setsArray[set.setNum - 1] || setsArray[0];
+                          if (currentSetString) {
+                            const match = currentSetString.match(/([\d.]+)\s*lbs\s*x\s*(\d+)/);
+                            if (match) {
+                              placeholderWeight = match[1];
+                              placeholderReps = match[2];
+                            }
+                          }
+                        }
+
                         return (
                           <div
                             key={set.setNum}
@@ -607,7 +653,7 @@ export default function TodayWorkout({ store }) {
                                     type="number"
                                     step="any"
                                     inputMode="decimal"
-                                    placeholder="lbs"
+                                    placeholder={placeholderWeight}
                                     value={set.weight}
                                     onChange={(e) => handleSetChange(ex.id, set.setNum, 'weight', e.target.value)}
                                     disabled={set.completed}
@@ -631,7 +677,7 @@ export default function TodayWorkout({ store }) {
                                     type="number"
                                     pattern="[0-9]*"
                                     inputMode="numeric"
-                                    placeholder="reps"
+                                    placeholder={placeholderReps}
                                     value={set.reps}
                                     onChange={(e) => handleSetChange(ex.id, set.setNum, 'reps', e.target.value)}
                                     disabled={set.completed}
@@ -686,12 +732,13 @@ export default function TodayWorkout({ store }) {
                               }}>
                                 {hasLastLog && (
                                   <span>
-                                    Last: <span style={{ color: 'var(--shark-300)' }}>{stats.last.sets.split(', ')[set.setNum - 1] || stats.last.sets.split(', ')[0]}</span>
+                                    {stats.isComparable ? `Comp (${stats.comparableName}): ` : 'Last: '}
+                                    <span style={{ color: 'var(--shark-300)' }}>{stats.last.sets.split(', ')[set.setNum - 1] || stats.last.sets.split(', ')[0]}</span>
                                   </span>
                                 )}
                                 {prWeight && (
                                   <span style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                                    <span style={{ color: 'var(--gym-gold)' }}>🏆</span> PR: <span style={{ color: 'var(--gym-gold)', fontWeight: 'bold' }}>{prWeight} lbs x {prReps}</span>
+                                    <span style={{ color: 'var(--gym-gold)' }}>🏆</span> {stats.isComparable ? 'Comp PR: ' : 'PR: '}<span style={{ color: 'var(--gym-gold)', fontWeight: 'bold' }}>{prWeight} lbs x {prReps}</span>
                                   </span>
                                 )}
                               </div>

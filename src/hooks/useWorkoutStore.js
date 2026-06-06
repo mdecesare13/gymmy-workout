@@ -73,7 +73,60 @@ export function useWorkoutStore() {
   // --- Helper: Get Past Performance for an Exercise ---
   const getExerciseStats = (exerciseId) => {
     const logs = workoutHistory.filter(log => log.exerciseId === exerciseId);
-    if (logs.length === 0) return { last: null, pr: null };
+    if (logs.length === 0) {
+      // Find a comparable exercise in the same region, preferably same visualKey
+      const targetEx = exercisesData.find(ex => ex.id === exerciseId);
+      if (!targetEx) return { last: null, pr: null, isComparable: false };
+      
+      const regionLogs = workoutHistory.filter(log => log.region === targetEx.region && !log.isCardio);
+      if (regionLogs.length > 0) {
+        const samePatternLogs = regionLogs.filter(log => {
+          const exDetail = exercisesData.find(e => e.id === log.exerciseId);
+          return exDetail && exDetail.visualKey === targetEx.visualKey;
+        });
+        
+        const candidateLogs = samePatternLogs.length > 0 ? samePatternLogs : regionLogs;
+        // Sort candidateLogs by date descending to find the most recent
+        const sortedCandidates = [...candidateLogs].sort((a, b) => new Date(b.date) - new Date(a.date));
+        const mostRecentLog = sortedCandidates[0];
+        
+        if (mostRecentLog) {
+          // Compute stats for the comparable exercise
+          const compLogs = workoutHistory.filter(log => log.exerciseId === mostRecentLog.exerciseId);
+          if (compLogs.length > 0) {
+            let prWeight = 0;
+            let prReps = 0;
+            let prDate = '';
+            compLogs.forEach(log => {
+              log.sets.forEach(set => {
+                if (set.completed && set.weight > prWeight) {
+                  prWeight = set.weight;
+                  prReps = set.reps;
+                  prDate = log.date;
+                }
+              });
+            });
+            const sortedCompLogs = [...compLogs].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const lastLog = sortedCompLogs[0];
+            
+            return {
+              last: lastLog ? {
+                date: lastLog.date,
+                sets: lastLog.sets.filter(s => s.completed).map(s => `${s.weight} lbs x ${s.reps}`).join(', ')
+              } : null,
+              pr: prWeight > 0 ? {
+                weight: prWeight,
+                reps: prReps,
+                date: prDate
+              } : null,
+              isComparable: true,
+              comparableName: mostRecentLog.exerciseName
+            };
+          }
+        }
+      }
+      return { last: null, pr: null, isComparable: false };
+    }
 
     // Find PR (Max weight lifted for at least 1 completed rep)
     let prWeight = 0;
@@ -103,7 +156,8 @@ export function useWorkoutStore() {
         weight: prWeight,
         reps: prReps,
         date: prDate
-      } : null
+      } : null,
+      isComparable: false
     };
   };
 
