@@ -253,7 +253,7 @@ export default function ExerciseLibrary() {
               <div className="ios-sheet-body">
                 {/* Dynamic SVGs Form Guide Animator */}
                 <div style={{ marginBottom: '20px' }}>
-                  <FormVisualizer visualKey={selectedExercise.visualKey} />
+                  <FormVisualizer visualKey={selectedExercise.visualKey} exerciseId={selectedExercise.id} />
                 </div>
 
                 {/* Description */}

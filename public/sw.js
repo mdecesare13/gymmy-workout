@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ironflow-cache-v10';
+const CACHE_NAME = 'ironflow-cache-v11';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -13,7 +13,8 @@ const ASSETS_TO_CACHE = [
   '/src/components/PlanBuilder.jsx',
   '/src/components/ExerciseLibrary.jsx',
   '/src/components/StatsDashboard.jsx',
-  '/src/components/ChatAssistant.jsx'
+  '/src/components/ChatAssistant.jsx',
+  '/src/components/FormVisualizer.jsx'
 ];
 
 // Install Service Worker

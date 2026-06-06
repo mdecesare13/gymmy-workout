@@ -853,7 +853,7 @@ export default function TodayWorkout({ store }) {
               
               <div className="ios-sheet-body">
                 <div style={{ marginBottom: '16px' }}>
-                  <FormVisualizer visualKey={selectedGuideEx.visualKey} />
+                  <FormVisualizer visualKey={selectedGuideEx.visualKey} exerciseId={selectedGuideEx.id} />
                 </div>
 
                 <div style={{ marginBottom: '14px' }}>
