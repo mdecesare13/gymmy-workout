@@ -387,6 +387,7 @@ export default function TodayWorkout({ store }) {
                 <input
                   type="number"
                   pattern="[0-9]*"
+                  inputMode="numeric"
                   placeholder="0"
                   value={cardioDuration}
                   onChange={(e) => setCardioDuration(e.target.value)}
@@ -409,6 +410,7 @@ export default function TodayWorkout({ store }) {
                 <input
                   type="number"
                   step="0.1"
+                  inputMode="decimal"
                   placeholder="0.0"
                   value={cardioDistance}
                   onChange={(e) => setCardioDistance(e.target.value)}
@@ -603,7 +605,8 @@ export default function TodayWorkout({ store }) {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                   <input
                                     type="number"
-                                    pattern="[0-9]*"
+                                    step="any"
+                                    inputMode="decimal"
                                     placeholder="lbs"
                                     value={set.weight}
                                     onChange={(e) => handleSetChange(ex.id, set.setNum, 'weight', e.target.value)}
@@ -627,6 +630,7 @@ export default function TodayWorkout({ store }) {
                                   <input
                                     type="number"
                                     pattern="[0-9]*"
+                                    inputMode="numeric"
                                     placeholder="reps"
                                     value={set.reps}
                                     onChange={(e) => handleSetChange(ex.id, set.setNum, 'reps', e.target.value)}
