@@ -6,6 +6,19 @@ export default function StatsDashboard({ store }) {
   const fileInputRef = useRef(null);
 
   // Compute stats
+  const getSessionDurationForDate = (sessions) => {
+    let strengthDuration = 0;
+    let cardioDuration = 0;
+    sessions.forEach(log => {
+      if (log.isCardio) {
+        cardioDuration += (log.duration || 0);
+      } else if (log.sessionDuration && strengthDuration === 0) {
+        strengthDuration = log.sessionDuration;
+      }
+    });
+    return strengthDuration + cardioDuration;
+  };
+
   const totalWorkouts = new Set(workoutHistory.map(log => log.date)).size;
   
   const totalSets = workoutHistory.reduce((sum, log) => {
@@ -154,13 +167,21 @@ export default function StatsDashboard({ store }) {
             return (
               <div key={date} style={{ marginBottom: '16px' }}>
                 <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
                   fontSize: '12px',
                   fontWeight: '700',
                   color: 'var(--shark-500)',
                   marginBottom: '8px',
                   textTransform: 'uppercase'
                 }}>
-                  {formattedDate}
+                  <span>{formattedDate}</span>
+                  {getSessionDurationForDate(sessions) > 0 && (
+                    <span style={{ color: 'var(--gym-gold)', display: 'flex', alignItems: 'center', gap: '4px', textTransform: 'none' }}>
+                      ⏱️ {getSessionDurationForDate(sessions)} mins
+                    </span>
+                  )}
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

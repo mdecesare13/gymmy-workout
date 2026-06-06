@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FormVisualizer from './FormVisualizer';
-import { Play, Check, Trophy, RefreshCw, HelpCircle, X, ChevronRight } from 'lucide-react';
+import { Play, Check, Trophy, RefreshCw, HelpCircle, X, ChevronRight, Timer } from 'lucide-react';
 
 export default function TodayWorkout({ store }) {
   const { 
@@ -38,6 +38,41 @@ export default function TodayWorkout({ store }) {
   const [cardioDuration, setCardioDuration] = useState('');
   const [cardioDistance, setCardioDistance] = useState('');
   const [cardioNotes, setCardioNotes] = useState('');
+
+  // Live stopwatch states
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
+  useEffect(() => {
+    if (!activeSession || !activeSession.startTime) {
+      setElapsedSeconds(0);
+      return;
+    }
+
+    const calculateElapsed = () => {
+      const start = activeSession.startTime;
+      const now = Date.now();
+      const diff = Math.max(0, Math.floor((now - start) / 1000));
+      setElapsedSeconds(diff);
+    };
+
+    calculateElapsed();
+    const interval = setInterval(calculateElapsed, 1000);
+
+    return () => clearInterval(interval);
+  }, [activeSession]);
+
+  const formatTime = (totalSeconds) => {
+    const hrs = Math.floor(totalSeconds / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+    
+    const pad = (num) => String(num).padStart(2, '0');
+    
+    if (hrs > 0) {
+      return `${hrs}:${pad(mins)}:${pad(secs)}`;
+    }
+    return `${pad(mins)}:${pad(secs)}`;
+  };
 
   // Auto-expand first incomplete exercise if a session is loaded from store/localStorage
   useEffect(() => {
@@ -88,7 +123,8 @@ export default function TodayWorkout({ store }) {
       dayName: weekdays[selectedDayIndex],
       title: todayWorkout.title,
       type: todayWorkout.type,
-      exercises: copiedExercises
+      exercises: copiedExercises,
+      startTime: Date.now()
     });
   };
 
@@ -175,11 +211,14 @@ export default function TodayWorkout({ store }) {
   const finishWorkout = () => {
     if (!activeSession) return;
     
+    const seconds = activeSession.startTime ? Math.max(0, Math.floor((Date.now() - activeSession.startTime) / 1000)) : 0;
+    
     if (activeSession.type === 'run') {
-      logCardioSession(activeSession.dayIndex, cardioType, cardioDuration, cardioDistance, cardioNotes);
+      const finalDuration = cardioDuration || Math.round(seconds / 60) || '';
+      logCardioSession(activeSession.dayIndex, cardioType, finalDuration, cardioDistance, cardioNotes);
     } else {
       // Log active sessions matching completion criteria
-      logWorkoutSession(activeSession.dayIndex, activeSession.exercises);
+      logWorkoutSession(activeSession.dayIndex, activeSession.exercises, seconds);
     }
     setActiveSession(null);
     setShowTrophy(true);
@@ -264,7 +303,13 @@ export default function TodayWorkout({ store }) {
         {/* Active Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <div>
-            <span className="badge badge-red" style={{ marginBottom: '4px' }}>Active Session</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+              <span className="badge badge-red" style={{ margin: 0 }}>Active Session</span>
+              <span className="badge" style={{ backgroundColor: 'var(--shark-700)', color: 'var(--gym-gold)', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', fontWeight: 'bold', margin: 0 }}>
+                <Timer size={12} />
+                {formatTime(elapsedSeconds)}
+              </span>
+            </div>
             <h1 style={{ fontSize: '24px' }}>{activeSession.title}</h1>
           </div>
           <button

@@ -484,8 +484,9 @@ export function useWorkoutStore() {
   };
 
   // --- Complete Workout Logger ---
-  const logWorkoutSession = (dayIndex, loggedExercises) => {
+  const logWorkoutSession = (dayIndex, loggedExercises, durationSeconds) => {
     const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD local format
+    const durationMins = durationSeconds ? Math.round(durationSeconds / 60) : 0;
     
     // Append completed entries to history
     const newLogs = loggedExercises.map(ex => ({
@@ -493,6 +494,7 @@ export function useWorkoutStore() {
       exerciseId: ex.id,
       exerciseName: ex.name,
       region: ex.region,
+      sessionDuration: durationMins,
       sets: ex.sets.map(s => ({
         setNum: s.setNum,
         weight: Number(s.weight) || 0,
@@ -584,7 +586,7 @@ export function useWorkoutStore() {
               set.weight,
               set.reps,
               '',
-              '',
+              log.sessionDuration || '',
               '',
               ''
             ].join(','));
@@ -679,6 +681,7 @@ export function useWorkoutStore() {
           const setNum = parseInt(cols[setIdx], 10);
           const weight = parseFloat(cols[weightIdx]);
           const reps = parseInt(cols[repsIdx], 10);
+          const duration = durationIdx !== -1 ? parseInt(cols[durationIdx], 10) || 0 : 0;
 
           if (isNaN(setNum) || isNaN(weight) || isNaN(reps)) continue;
 
@@ -692,6 +695,7 @@ export function useWorkoutStore() {
               exerciseId,
               exerciseName,
               region,
+              sessionDuration: duration,
               sets: []
             };
           }
