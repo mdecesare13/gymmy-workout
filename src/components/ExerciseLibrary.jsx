@@ -220,7 +220,7 @@ export default function ExerciseLibrary() {
           <div className="ios-sheet-handle" />
           
           {selectedExercise && (
-            <div>
+            <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
                 <div>
                   <span className="badge badge-red" style={{ marginBottom: '6px' }}>
@@ -247,27 +247,29 @@ export default function ExerciseLibrary() {
                 </button>
               </div>
 
-              {/* Dynamic SVGs Form Guide Animator */}
-              <div style={{ marginBottom: '20px' }}>
-                <FormVisualizer visualKey={selectedExercise.visualKey} />
-              </div>
+              <div className="ios-sheet-body">
+                {/* Dynamic SVGs Form Guide Animator */}
+                <div style={{ marginBottom: '20px' }}>
+                  <FormVisualizer visualKey={selectedExercise.visualKey} />
+                </div>
 
-              {/* Description */}
-              <div style={{ marginBottom: '16px' }}>
-                <h3 style={{ fontSize: '12px', color: 'var(--shark-500)' }}>Description</h3>
-                <p style={{ fontSize: '14px', color: 'var(--shark-100)' }}>{selectedExercise.description}</p>
-              </div>
+                {/* Description */}
+                <div style={{ marginBottom: '16px' }}>
+                  <h3 style={{ fontSize: '12px', color: 'var(--shark-500)' }}>Description</h3>
+                  <p style={{ fontSize: '14px', color: 'var(--shark-100)' }}>{selectedExercise.description}</p>
+                </div>
 
-              {/* Instructions */}
-              <div>
-                <h3 style={{ fontSize: '12px', color: 'var(--shark-500)', marginBottom: '8px' }}>Execution Cues</h3>
-                <ol style={{ paddingLeft: '20px', color: 'var(--shark-300)', fontSize: '14px', lineHeight: '1.5' }}>
-                  {selectedExercise.instructions.map((inst, index) => (
-                    <li key={index} style={{ marginBottom: '8px' }}>{inst}</li>
-                  ))}
-                </ol>
+                {/* Instructions */}
+                <div>
+                  <h3 style={{ fontSize: '12px', color: 'var(--shark-500)', marginBottom: '8px' }}>Execution Cues</h3>
+                  <ol style={{ paddingLeft: '20px', color: 'var(--shark-300)', fontSize: '14px', lineHeight: '1.5' }}>
+                    {selectedExercise.instructions.map((inst, index) => (
+                      <li key={index} style={{ marginBottom: '8px' }}>{inst}</li>
+                    ))}
+                  </ol>
+                </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </div>
