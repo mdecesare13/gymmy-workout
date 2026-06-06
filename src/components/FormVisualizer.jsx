@@ -11,11 +11,13 @@ export default function FormVisualizer({ visualKey, exerciseId }) {
       list.push({ url: `/assets/exercises/${exId}.mp4`, type: 'video' });
       list.push({ url: `/assets/exercises/${exId}.webm`, type: 'video' });
       list.push({ url: `/assets/exercises/${exId}.gif`, type: 'image' });
+      list.push({ url: `/assets/exercises/${exId}.jpg`, type: 'image' });
     }
     if (vKey) {
       list.push({ url: `/assets/exercises/${vKey}.mp4`, type: 'video' });
       list.push({ url: `/assets/exercises/${vKey}.webm`, type: 'video' });
       list.push({ url: `/assets/exercises/${vKey}.gif`, type: 'image' });
+      list.push({ url: `/assets/exercises/${vKey}.jpg`, type: 'image' });
     }
     return list;
   };
@@ -134,9 +136,9 @@ export default function FormVisualizer({ visualKey, exerciseId }) {
             alt={visualKey || 'Exercise Demonstration'}
           />
           <div style={customMediaBadgeStyle}>
-            Demo GIF
+            Demo
           </div>
-        </div>
+</div>
       );
     }
   }
