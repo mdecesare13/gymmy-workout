@@ -40,7 +40,8 @@ export default function ExerciseLibrary() {
   };
 
   return (
-    <div className="scrollable">
+    <>
+      <div className="scrollable">
       <div style={{ marginBottom: '20px' }}>
         <h1 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <BookOpen color="var(--gym-red)" size={26} />
@@ -211,6 +212,8 @@ export default function ExerciseLibrary() {
         </div>
       )}
 
+      </div>
+
       {/* --- Slide-Up Detail Modal Sheet --- */}
       <div className={`ios-sheet-backdrop ${selectedExercise ? 'active' : ''}`} onClick={() => setSelectedExercise(null)}>
         <div
@@ -273,6 +276,6 @@ export default function ExerciseLibrary() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

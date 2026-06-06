@@ -259,7 +259,8 @@ export default function TodayWorkout({ store }) {
   // Active Logger View
   if (activeSession) {
     return (
-      <div className="scrollable" style={{ paddingBottom: 'calc(var(--safe-bottom) + 120px)' }}>
+      <>
+        <div className="scrollable" style={{ paddingBottom: 'calc(var(--safe-bottom) + 120px)' }}>
         {/* Active Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <div>
@@ -688,98 +689,98 @@ export default function TodayWorkout({ store }) {
         >
           Finish Workout
         </button>
-
-        {/* --- Swap Exercise Modal Sheet --- */}
-        <div className={`ios-sheet-backdrop ${selectedSwapEx ? 'active' : ''}`} onClick={() => setSelectedSwapEx(null)}>
-          <div className={`ios-sheet ${selectedSwapEx ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
-            <div className="ios-sheet-handle" />
-            {selectedSwapEx && (
-              <>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <h2 style={{ fontSize: '18px', marginBottom: '0' }}>Swap: {selectedSwapEx.name}</h2>
-                  <button
-                    onClick={() => setSelectedSwapEx(null)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--shark-500)' }}
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-                <div className="ios-sheet-body">
-                  <p style={{ marginBottom: '16px' }}>Select an alternative movement targeting the **{selectedSwapEx.region}** muscle region:</p>
-                  
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {getSwapAlternatives(selectedSwapEx.id, selectedSwapEx.region).map(alt => (
-                      <button
-                        key={alt.id}
-                        onClick={() => handleSwapSelect(alt)}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '12px 14px',
-                          borderRadius: '10px',
-                          border: '1px solid var(--glass-border)',
-                          backgroundColor: 'var(--shark-700)',
-                          color: 'var(--shark-100)',
-                          cursor: 'pointer',
-                          textAlign: 'left',
-                          fontSize: '15px'
-                        }}
-                      >
-                        {alt.name}
-                        <ChevronRight size={16} color="var(--shark-500)" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* --- Form Guide Modal Sheet --- */}
-        <div className={`ios-sheet-backdrop ${selectedGuideEx ? 'active' : ''}`} onClick={() => setSelectedGuideEx(null)}>
-          <div className={`ios-sheet ${selectedGuideEx ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
-            <div className="ios-sheet-handle" />
-            {selectedGuideEx && (
-              <>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <h2 style={{ fontSize: '18px', marginBottom: '0' }}>Form Guide: {selectedGuideEx.name}</h2>
-                  <button
-                    onClick={() => setSelectedGuideEx(null)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--shark-500)' }}
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-                
-                <div className="ios-sheet-body">
-                  <div style={{ marginBottom: '16px' }}>
-                    <FormVisualizer visualKey={selectedGuideEx.visualKey} />
-                  </div>
-
-                  <div style={{ marginBottom: '14px' }}>
-                    <h3 style={{ fontSize: '11px', color: 'var(--shark-500)' }}>Description</h3>
-                    <p style={{ fontSize: '14px', color: 'var(--shark-100)' }}>{selectedGuideEx.description}</p>
-                  </div>
-
-                  <div>
-                    <h3 style={{ fontSize: '11px', color: 'var(--shark-500)', marginBottom: '6px' }}>Form Cues</h3>
-                    <ol style={{ paddingLeft: '18px', color: 'var(--shark-300)', fontSize: '13px', lineHeight: '1.4' }}>
-                      {selectedGuideEx.instructions.map((inst, i) => (
-                        <li key={i} style={{ marginBottom: '6px' }}>{inst}</li>
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-
       </div>
-    );
-  }
+
+      {/* --- Swap Exercise Modal Sheet --- */}
+      <div className={`ios-sheet-backdrop ${selectedSwapEx ? 'active' : ''}`} onClick={() => setSelectedSwapEx(null)}>
+        <div className={`ios-sheet ${selectedSwapEx ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
+          <div className="ios-sheet-handle" />
+          {selectedSwapEx && (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <h2 style={{ fontSize: '18px', marginBottom: '0' }}>Swap: {selectedSwapEx.name}</h2>
+                <button
+                  onClick={() => setSelectedSwapEx(null)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--shark-500)' }}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <div className="ios-sheet-body">
+                <p style={{ marginBottom: '16px' }}>Select an alternative movement targeting the **{selectedSwapEx.region}** muscle region:</p>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {getSwapAlternatives(selectedSwapEx.id, selectedSwapEx.region).map(alt => (
+                    <button
+                      key={alt.id}
+                      onClick={() => handleSwapSelect(alt)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '12px 14px',
+                        borderRadius: '10px',
+                        border: '1px solid var(--glass-border)',
+                        backgroundColor: 'var(--shark-700)',
+                        color: 'var(--shark-100)',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        fontSize: '15px'
+                      }}
+                    >
+                      {alt.name}
+                      <ChevronRight size={16} color="var(--shark-500)" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* --- Form Guide Modal Sheet --- */}
+      <div className={`ios-sheet-backdrop ${selectedGuideEx ? 'active' : ''}`} onClick={() => setSelectedGuideEx(null)}>
+        <div className={`ios-sheet ${selectedGuideEx ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
+          <div className="ios-sheet-handle" />
+          {selectedGuideEx && (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <h2 style={{ fontSize: '18px', marginBottom: '0' }}>Form Guide: {selectedGuideEx.name}</h2>
+                <button
+                  onClick={() => setSelectedGuideEx(null)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--shark-500)' }}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <div className="ios-sheet-body">
+                <div style={{ marginBottom: '16px' }}>
+                  <FormVisualizer visualKey={selectedGuideEx.visualKey} />
+                </div>
+
+                <div style={{ marginBottom: '14px' }}>
+                  <h3 style={{ fontSize: '11px', color: 'var(--shark-500)' }}>Description</h3>
+                  <p style={{ fontSize: '14px', color: 'var(--shark-100)' }}>{selectedGuideEx.description}</p>
+                </div>
+
+                <div>
+                  <h3 style={{ fontSize: '11px', color: 'var(--shark-500)', marginBottom: '6px' }}>Form Cues</h3>
+                  <ol style={{ paddingLeft: '18px', color: 'var(--shark-300)', fontSize: '13px', lineHeight: '1.4' }}>
+                    {selectedGuideEx.instructions.map((inst, i) => (
+                      <li key={i} style={{ marginBottom: '6px' }}>{inst}</li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
 
   // Standard Plan Target View (Not Started)
   return (
