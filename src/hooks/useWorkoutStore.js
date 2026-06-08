@@ -341,7 +341,8 @@ export function useWorkoutStore() {
             defaultSets: 1,
             defaultReps: duration,
             description: 'Run, cycle, or other aerobic exercises.',
-            instructions: ['Warm up for 5 mins.', 'Perform activity at desired pace.', 'Log your details.']
+            instructions: ['Warm up for 5 mins.', 'Perform activity at desired pace.', 'Log your details.'],
+            sets: [{ setNum: 1, weight: 0, reps: duration, completed: false }]
           }],
           duration,
           completed: false

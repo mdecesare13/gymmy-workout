@@ -107,7 +107,7 @@ export default function TodayWorkout({ store }) {
     // Create deep copy of target day's exercises to local state
     const copiedExercises = todayWorkout.exercises.map(ex => ({
       ...ex,
-      sets: ex.sets.map(s => ({
+      sets: (ex.sets || []).map(s => ({
         ...s,
         // Match history stats for default helper text placeholder
         ...getExerciseStats(ex.id) 
