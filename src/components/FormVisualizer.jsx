@@ -87,25 +87,6 @@ export default function FormVisualizer({ visualKey, exerciseId }) {
     zIndex: 10
   };
 
-  const tipFooterStyle = {
-    position: 'absolute',
-    bottom: '0',
-    left: '0',
-    right: '0',
-    backgroundColor: 'rgba(15, 23, 42, 0.85)',
-    borderTop: '1px solid var(--glass-border)',
-    padding: '6px 10px',
-    fontSize: '10px',
-    color: 'var(--shark-400)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    backdropFilter: 'blur(4px)',
-    lineHeight: '1.2',
-    zIndex: 10
-  };
-
   // Render video or image demo if media loads successfully
   if (!hasError && sources.length > 0) {
     const currentSource = sources[mediaIndex];
@@ -569,24 +550,6 @@ export default function FormVisualizer({ visualKey, exerciseId }) {
 
       <div style={blueprintBadgeStyle}>
         Kinetic Blueprint
-      </div>
-
-      {/* Asset Helper Footer Tip */}
-      <div style={tipFooterStyle}>
-        <span style={{ fontSize: '9px', opacity: 0.85 }}>Supply custom video or GIF: </span>
-        <code style={{
-          color: 'var(--gym-red)',
-          background: 'rgba(0,0,0,0.4)',
-          border: '1px solid rgba(255,75,75,0.15)',
-          padding: '1px 5px',
-          borderRadius: '3px',
-          fontSize: '9px',
-          fontFamily: 'monospace',
-          marginLeft: '5px',
-          letterSpacing: '0.2px'
-        }}>
-          /public/assets/exercises/{exerciseId || visualKey}.mp4
-        </code>
       </div>
     </div>
   );
